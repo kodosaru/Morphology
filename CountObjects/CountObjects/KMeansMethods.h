@@ -23,6 +23,8 @@
 #include <string>
 #include <set>
 
+#define DILATE_SIZE 2
+
 struct mouseInfo
 {
     std::vector<cv::Point2i> points;

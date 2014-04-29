@@ -115,12 +115,6 @@ int main(int argc, const char * argv[])
     {
         if(blobLists[i]!=nullptr)
         {
-            // Test code for moments
-            //cout<<Mij(*blobLists[i], 1, 1) - xbar(*blobLists[i]) * Mij(*blobLists[i], 0, 1)<<endl;
-            //Mij(v, 1, 1) - xbar(v) * Mij(v, 0, 1)
-            //cout<<muij((*blobLists[i]), 1, 1)<<endl;
-            //cout<<Mij(*blobLists[i], 1, 1) - ybar(*blobLists[i]) * Mij(*blobLists[i], 1, 0)<<endl;
-
             Scalar labelColor;
             Point centroid(xbar(*blobLists[i]), ybar(*blobLists[i]));
             stringstream ss;
@@ -138,29 +132,6 @@ int main(int argc, const char * argv[])
             cout<<endl<<"Blob["<<i<<"]"<<endl;
             cout<<"Centroid of blob: ("<<centroid.x<<","<<centroid.y<<")"<<endl;
             
-            /*
-            Mat *covar = covarianceMatrix(*blobLists[i]);
-            cout<<"Covariance Matrix"<<endl;
-            cout<<"| "<<covar->at<double>(0,0)<<" "<<covar->at<double>(0,1)<<"|"<<endl;
-            cout<<"| "<<covar->at<double>(1,0)<<" "<<covar->at<double>(1,1)<<"|"<<endl;
-            Mat eval, evec;
-            eigen((*covar),eval,evec);
-            // Printing out column order and taking negative of eigenvectors like MATLAB
-            evec = -1.0 * evec;
-            cout<<"Eigenvector Matrix"<<endl;
-            cout<<"| "<<evec.at<double>(1,0)<<" "<<evec.at<double>(0,0)<<"|"<<endl;
-            cout<<"| "<<evec.at<double>(1,1)<<" "<<evec.at<double>(0,1)<<"|"<<endl;
-            cout<<"OpenCV Calc Eigenvalue Matrix"<<endl;
-            cout<<"| "<<eval.at<double>(1,0)<<" "<<0<<"|"<<endl;
-            cout<<"| "<<0<<" "<<eval.at<double>(0,0)<<"|"<<endl;
-            evec = *eigenvalueMatrix(*blobLists[i]);
-            cout<<"Moment Calc Eigenvalue Matrix"<<endl;
-            cout<<"| "<<eval.at<double>(1,0)<<" "<<0<<"|"<<endl;
-            cout<<"| "<<0<<" "<<eval.at<double>(0,0)<<"|"<<endl;
-            cout<<"Eccentricity: "<<eccentricity(*blobLists[i])<<endl;
-            covar->release();
-            */
-
             // Draw major axis
             Mat *orient = orientation(*blobLists[i]);
             double angle = orient->at<double>(0,0);
@@ -173,16 +144,52 @@ int main(int argc, const char * argv[])
             line(tempRegions, Point(centroid.x+deltaX,centroid.y-d), Point(centroid.x-deltaX,centroid.y+d), lineColor);
             orient->release();
             
+        }
+        else
+        {
+            cout<<"Blob "<<i<<" has a null pointer"<<endl;
+        }
+    }
+    sprintf(cn,"%s%s%s%d%s",outputDataDir.c_str(),outputFileName.c_str(),"Blobs",clusterCount,".png");
+    imwrite(cn,tempRegions);
+    imshow("Blobs",tempRegions);
+    
+    // Calculate remaining statistics
+    for(int i=0;i<nBlobs;i++)
+    {
+        if(blobLists[i]!=nullptr)
+        {
             /*
-            printf("Raw Moments: %0.2f  %0.2f %0.2f %0.2f %0.2f %0.2f %0.2f  %0.2f %0.2f %0.2f\n",Mij(*blobLists[i],0,0), Mij(*blobLists[i],1,0),  Mij(*blobLists[i],0,1),  Mij(*blobLists[i],2,0),  Mij(*blobLists[i],1,1),  Mij(*blobLists[i],0,2), Mij(*blobLists[i],3,0),  Mij(*blobLists[i],2,1), Mij(*blobLists[i],1,2),  Mij(*blobLists[i],0,3));
-            printf("Central Moments: %0.2f  %0.2f %0.2f %0.2f %0.2f %0.2f %0.2f\n",muij(*blobLists[i],2,0), muij(*blobLists[i],1,1), muij(*blobLists[i],0,2),muij(*blobLists[i],3,0), muij(*blobLists[i],2,1), muij(*blobLists[i],1,2), muij(*blobLists[i],0,3));
+             Mat *covar = covarianceMatrix(*blobLists[i]);
+             cout<<"Covariance Matrix"<<endl;
+             cout<<"| "<<covar->at<double>(0,0)<<" "<<covar->at<double>(0,1)<<"|"<<endl;
+             cout<<"| "<<covar->at<double>(1,0)<<" "<<covar->at<double>(1,1)<<"|"<<endl;
+             Mat eval, evec;
+             eigen((*covar),eval,evec);
+             // Printing out column order and taking negative of eigenvectors like MATLAB
+             evec = -1.0 * evec;
+             cout<<"Eigenvector Matrix"<<endl;
+             cout<<"| "<<evec.at<double>(1,0)<<" "<<evec.at<double>(0,0)<<"|"<<endl;
+             cout<<"| "<<evec.at<double>(1,1)<<" "<<evec.at<double>(0,1)<<"|"<<endl;
+             cout<<"OpenCV Calc Eigenvalue Matrix"<<endl;
+             cout<<"| "<<eval.at<double>(1,0)<<" "<<0<<"|"<<endl;
+             cout<<"| "<<0<<" "<<eval.at<double>(0,0)<<"|"<<endl;
+             evec = *eigenvalueMatrix(*blobLists[i]);
+             cout<<"Moment Calc Eigenvalue Matrix"<<endl;
+             cout<<"| "<<eval.at<double>(1,0)<<" "<<0<<"|"<<endl;
+             cout<<"| "<<0<<" "<<eval.at<double>(0,0)<<"|"<<endl;
+             cout<<"Eccentricity: "<<eccentricity(*blobLists[i])<<endl;
+             covar->release();
 
-            printf("Normalized Moments: %0.2f  %0.2f %0.2f %0.2f %0.2f %0.2f %0.2f\n",etaij(*blobLists[i],2,0), etaij(*blobLists[i],1,1), etaij(*blobLists[i],0,2),etaij(*blobLists[i],3,0), etaij(*blobLists[i],2,1), etaij(*blobLists[i],1,2), etaij(*blobLists[i],0,3));
-            */
-
+             printf("Raw Moments: %0.2f  %0.2f %0.2f %0.2f %0.2f %0.2f %0.2f  %0.2f %0.2f %0.2f\n",Mij(*blobLists[i],0,0), Mij(*blobLists[i],1,0),  Mij(*blobLists[i],0,1),  Mij(*blobLists[i],2,0),  Mij(*blobLists[i],1,1),  Mij(*blobLists[i],0,2), Mij(*blobLists[i],3,0),  Mij(*blobLists[i],2,1), Mij(*blobLists[i],1,2),  Mij(*blobLists[i],0,3));
+             printf("Central Moments: %0.2f  %0.2f %0.2f %0.2f %0.2f %0.2f %0.2f\n",muij(*blobLists[i],2,0), muij(*blobLists[i],1,1), muij(*blobLists[i],0,2),muij(*blobLists[i],3,0), muij(*blobLists[i],2,1), muij(*blobLists[i],1,2), muij(*blobLists[i],0,3));
+             
+             printf("Normalized Moments: %0.2f  %0.2f %0.2f %0.2f %0.2f %0.2f %0.2f\n",etaij(*blobLists[i],2,0), etaij(*blobLists[i],1,1), etaij(*blobLists[i],0,2),etaij(*blobLists[i],3,0), etaij(*blobLists[i],2,1), etaij(*blobLists[i],1,2), etaij(*blobLists[i],0,3));
+             */
+            
             // Hu moments
             vector<vector<double>> huMoments(nBlobs);
-             for(int j=1;j<=8;j++)
+            for(int j=1;j<=8;j++)
             {
                 huMoments[i].push_back(Hui(*blobLists[i],j));
             }
@@ -202,20 +209,15 @@ int main(int argc, const char * argv[])
         cout<<endl;
         double dist = 0.0;
         /*for(int i=0;i<nBlobs;i++)
-            for(int j=0;j<nBlobs;j++)
-            {
-                if(i<j)
-                    euclidDist(huMoments[i], vector<double> v);
-            }*/
- 
-
+         for(int j=0;j<nBlobs;j++)
+         {
+         if(i<j)
+         euclidDist(huMoments[i], vector<double> v);
+         }*/
     }
-    
+
     destroyRegionBlobLists(regionLists, blobLists);
 
-    sprintf(cn,"%s%s%s%d%s",outputDataDir.c_str(),outputFileName.c_str(),"Blobs",clusterCount,".png");
-    imwrite(cn,tempRegions);
-    imshow("Blobs",tempRegions);
     waitKey();
     
     return 0;

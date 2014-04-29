@@ -144,9 +144,11 @@ int  classifyUsingSavedCenters(bool bSaveState, std::string dataDir, std::string
     
     // Do opening to get rid of speckles
     erode(mask,mask,Mat());
-    Mat dilateElement(5,5,CV_8UC1);
-    dilateElement=Scalar(255,255,255);
-    dilate(mask,mask,Mat());
+    int dilationSize = DILATE_SIZE;
+    Mat dilateElement = getStructuringElement( MORPH_RECT,
+                                        Size( 2*dilationSize + 1, 2*dilationSize+1 ),
+                                        Point( dilationSize, dilationSize ) );
+    dilate(mask,mask,dilateElement);
     imshow("Gray Scale",mask);
     waitKey();
     
@@ -186,11 +188,7 @@ int kMeansCustom(bool bSaveState, std::string dataDir, std::string fileName, int
     ostringstream ss;
     ss<<clusterCount;
     TermCriteria termCrit=TermCriteria( CV_TERMCRIT_EPS+CV_TERMCRIT_ITER, 10, 1.0);
-    kmeans(points, clusterCount, pMouseInfo->labels, termCrit, 3, KMEANS_USE_INITIAL_LABELS|KMEANS_PP_CENTERS, centers);
-    for(int i=0; i<pMouseInfo->labels.total(); i++)
-    {
-        cout<<"Label class: "<<pMouseInfo->labels.at<int>(i)<<endl;
-    }
+    kmeans(points, clusterCount, pMouseInfo->labels, termCrit, 3, KMEANS_PP_CENTERS, centers);
     for(int i=0;i<centers.rows;i++)
         printf("After Center(%d): (%0.2f,%0.2f,%0.2f)\n",i,centers.at<float>(i,0),centers.at<float>(i,1),centers.at<float>(i,3));
     if(bSaveState)
@@ -255,9 +253,11 @@ int kMeansCustom(bool bSaveState, std::string dataDir, std::string fileName, int
     
     // Do opening to get rid of speckles
     erode(mask,mask,Mat());
-    Mat dilateElement(5,5,CV_8UC1);
-    dilateElement=Scalar(255,255,255);
-    dilate(mask,mask,Mat());
+    int dilationSize = DILATE_SIZE;
+    Mat dilateElement = getStructuringElement( MORPH_RECT,
+                                              Size( 2*dilationSize + 1, 2*dilationSize+1 ),
+                                              Point( dilationSize, dilationSize ) );
+    dilate(mask,mask,dilateElement);
     imshow("Gray Scale",mask);
     //waitKey();
     
