@@ -16,22 +16,52 @@
 
 #define FILLED -1
 
+using namespace cv;
+using namespace std;
+
+void classifyObjects(vector<vector<float>> references, vector<vector<float>> objects, vector<int> classification)
+{
+    float tolerance = 5.0;
+    
+    if(references[0].size()!=objects[0].size())
+    {
+        cout<<"Unable to compute Euclidean distance in classifyObject() - vectors are of a different length";
+        return;
+    }
+    
+    // Create a vector whose index is the object ID and whose value is the classification ID
+    for(int i=0;i<objects.size();i++)
+    {
+        // Negative one equal yet to be classified
+        classification.push_back(-1);
+    }
+
+    double minDist=DBL_MAX, tempDist,sum=0.0;
+    int referenceNdx = -1;
+    for(int i=0;i<objects.size();i++)
+    {
+        for(int j=0;j<references.size();j++)
+        {
+            sum = 0.0;
+            for(int k=0;k<references[0].size();k++)
+            {
+                sum += POW2(objects[i][k] - references[j][k]);
+            }
+            tempDist = sqrt(sum);
+            if(tempDist < tolerance && tempDist < minDist)
+            {
+                referenceNdx = j;
+                minDist = tempDist;
+            }
+        }
+        classification[i] = referenceNdx;
+        cout<<"Object["<<i<<"]'s descriptor is "<<minDist<<"away from and closest to reference["<<referenceNdx<<"]'s descriptor"<<endl;
+    }
+}
+
+
 using namespace std;
 using namespace cv;
-
-double euclidDist(vector<double> u, vector<double> v)
-{
-    if(u.size()!=v.size())
-    {
-        cout<<"Unable to compute Euclidean distance - vectors are of a different length";
-        return -DBL_MAX;
-    }
-    double sum=0.0;
-    for(int i=0;i<u.size();i++)
-        sum+=pow(u[i] - v[i], 2);
-    sum=sqrt(sum);
-    return sum;
-}
 
 int main(int argc, const char * argv[])
 {
@@ -194,7 +224,7 @@ int main(int argc, const char * argv[])
                 huMoments[i].push_back(Hui(*blobLists[i],j));
             }
             cout<<"Hu Invarients:";
-            for(int j=0;j<8;j++)
+            for(int j=0;j<NUM_HU;j++)
                 printf(" %0.2f",huMoments[i][j]);
             cout<<endl;
         }
