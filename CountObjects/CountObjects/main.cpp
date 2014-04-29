@@ -12,11 +12,10 @@
 #include "CountObjectsMethods.h"
 #include "KMeansMethods.h"
 #include "Moments.h"
+#include "Settings.h"
 #include <sstream>
 #include <fstream>
 #include <algorithm>
-
-#define FILLED -1
 
 using namespace cv;
 using namespace std;
@@ -69,6 +68,8 @@ void readInReferences(vector<HUREF>& references, string filePath)
 		{
             bLabel = true;
 			getline(ref,line);
+            if(line.size() == 0)
+                break;
 			cout << line << endl;
             split(line, strs, ' ');
             for(int i=0;i<strs.size();i++)
@@ -96,6 +97,7 @@ void readInReferences(vector<HUREF>& references, string filePath)
 
 int classifyObject(vector<HUREF> references, vector<double> object)
 {
+    // Actually using square of distance to avoid taking square root
     float tolerance = 1.0;
     
     if(references[0].val.size() != object.size())
@@ -104,18 +106,17 @@ int classifyObject(vector<HUREF> references, vector<double> object)
         return -INT_MAX;
     }
     
-    double minDist=DBL_MAX, tempDist,sum=0.0;
-    int referenceNdx = -1;
+    double minDist=DBL_MAX, tempDist;
+    int referenceNdx = -INT_MAX;
     // Loop through all of the reference Hu variant vectors
     for(int j=0;j<references.size();j++)
     {
-        sum = 0.0;
+        tempDist = 0.0;
         // For each reference object vector, loop through the elements
         for(int k=0;k<references[j].val.size();k++)
         {
-            sum += POW2(object[k] - references[j].val[k]);
+            tempDist += POW2(object[k] - references[j].val[k]);
         }
-        tempDist = sqrt(sum);
         if(tempDist < tolerance && tempDist < minDist)
         {
             referenceNdx = j;
@@ -123,7 +124,10 @@ int classifyObject(vector<HUREF> references, vector<double> object)
         }
     }
     
-    cout<<"Object's descriptor is "<<minDist<<"away from and closest to "<<references[referenceNdx].objectDesc<<"["<<referenceNdx<<"]'s descriptor"<<endl;
+    if(referenceNdx != -INT_MAX)
+        cout<<"Object's descriptor is "<<minDist<<" away from and closest to "<<references[referenceNdx].objectDesc<<"["<<referenceNdx<<"]'s descriptor"<<endl;
+    else
+        cout<<"Object's descriptor is does not match any descriptors"<<endl;
     return referenceNdx;
 }
 
@@ -136,11 +140,6 @@ using namespace cv;
 
 int main(int argc, const char * argv[])
 {
-    //vector<HUREF> dummy;
-    //string path="/Users/donj/references.txt";
-    //readInReferences(dummy, path);
-    //return 0;
-    
     // Input arguments
     // 0 program name
     // 1 full input file name with extension
@@ -196,7 +195,6 @@ int main(int argc, const char * argv[])
     sprintf(cn,"%s%s%s%d%s",outputDataDir.c_str(),outputFileName.c_str(),"Binary",clusterCount,".png");
     cout<<"Path to binary image file: "<<cn<<endl;
     Mat binary=imread(cn,CV_LOAD_IMAGE_GRAYSCALE);
-    imshow("Binary",binary);
     
     // Create data structures to save region and blob information
     unsigned short nRegions=0;
@@ -264,7 +262,9 @@ int main(int argc, const char * argv[])
     }
     sprintf(cn,"%s%s%s%d%s",outputDataDir.c_str(),outputFileName.c_str(),"Blobs",clusterCount,".png");
     imwrite(cn,tempRegions);
-    imshow("Blobs",tempRegions);
+    imshow("Moments, Centroid and Major Axis",tempRegions);
+    if(WAIT_WIN)
+        waitKey();
     
     // Calculate remaining statistics
     for(int i=0;i<nBlobs;i++)
@@ -302,7 +302,7 @@ int main(int argc, const char * argv[])
             
             // Hu moments
             vector<vector<double>> huMoments(nBlobs);
-            for(int j=1;j<=8;j++)
+            for(int j=1;j<=NUM_HU;j++)
             {
                 huMoments[i].push_back(Hui(*blobLists[i],j));
             }

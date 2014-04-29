@@ -25,6 +25,7 @@
 // Mine
 #include "CountObjectsMethods.h"
 #include "FloodFillMethods.h"
+#include "Settings.h"
 
 #define BLOB_MIN_PIX 1000
 #define BLOB_MAX_PIX 50000
@@ -130,29 +131,33 @@ void extractblobs(Mat& regions, int clusterCount, unsigned short& nRegion, vecto
     char cn[256];
     sprintf(cn,"%s%s%s%d%s",outputDataDir.c_str(),outputFileName.c_str(),"Regions",clusterCount,".png");
     imwrite(cn,tempRegions);
-    imshow("Regions",tempRegions);
+    imshow("Extraction",tempRegions);
     waitKey();
 }
 
 int readInImage(Mat& image, string inputDataDir, string fullInputfileName, string outputDataDir, string outputFileName, float resizeFactor)
 {
     Mat input = imread(inputDataDir+fullInputfileName);
-    namedWindow("Input");
     if (input.empty())
     {
         cout << "Cannot open input image" << endl;
         return 1;
     }
     resize(input,input,Size(input.cols * resizeFactor, input.rows * resizeFactor),0,0,INTER_LINEAR);
+    namedWindow("Input");
     imshow("Input", input);
-    //waitKey();
+    if(WAIT_WIN)
+        waitKey();
     
     Mat ycrcb;
-    namedWindow("YCrCb");
     cvtColor(input,ycrcb,CV_BGR2YCrCb);
     imwrite(outputDataDir + outputFileName + ".png",ycrcb);
     
-    //waitKey();
+    namedWindow("YCrCb");
+    imshow("YCrCb", ycrcb);
+    if(WAIT_WIN)
+        waitKey();
+    
     return 0;
 }
 

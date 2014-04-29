@@ -78,6 +78,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		723CDFD2191068ED00DE2A8A /* Settings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Settings.h; sourceTree = "<group>"; };
 		72951E96190C5DE600618A74 /* CountObjectsMethods.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CountObjectsMethods.cpp; sourceTree = "<group>"; };
 		72951E97190C5DE600618A74 /* CountObjectsMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountObjectsMethods.h; sourceTree = "<group>"; };
 		72951E98190C5DE600618A74 /* FloodFillMethods.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FloodFillMethods.cpp; sourceTree = "<group>"; };
@@ -265,6 +266,7 @@
 				72951E98190C5DE600618A74 /* FloodFillMethods.cpp */,
 				72951E99190C5DE600618A74 /* FloodFillMethods.h */,
 				72951E9A190C5DE600618A74 /* main.cpp */,
+				723CDFD2191068ED00DE2A8A /* Settings.h */,
 				72951E9B190C5DE600618A74 /* Stack.cpp */,
 				72951E9C190C5DE600618A74 /* Stack.hpp */,
 				72CA399F18F437A9001401AB /* Canny.cpp */,

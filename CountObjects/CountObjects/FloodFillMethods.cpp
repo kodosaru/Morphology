@@ -8,6 +8,7 @@
 
 #include "FloodFillMethods.h"
 #include "Archive.hpp"
+#include "Settings.h"
 
 using namespace std;
 using namespace cv;
@@ -171,6 +172,9 @@ void adjustContrastBrightness(Mat& image, Mat& new_image, int beta, double alpha
 void testStack(Mat& binary, string dataDir)
 {
     imshow("binary",binary);
+    if(WAIT_WIN)
+        waitKey();
+    
     imwrite(dataDir+"outbinary.png",binary);
     long int nPix=binary.rows*binary.cols;
     Stack<PIXEL> s((int)nPix);
@@ -198,7 +202,8 @@ void testStack(Mat& binary, string dataDir)
         setPixel_8UC1(pixel,test);
     }
     std::cout<<"End of pushing and popping all pixels in binary image onto stack"<<endl;
-    imshow("test",test);
     imwrite(dataDir+"outtest.png",test);
-    // waitKey();
+    imshow("test",test);
+    if(WAIT_WIN)
+        waitKey();
 }

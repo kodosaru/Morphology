@@ -13,8 +13,8 @@
 #include "boost/filesystem/operations.hpp"
 #include "boost/filesystem/path.hpp"
 #include "boost/progress.hpp"
-
-#define POW2(val) ((val) * (val))
+#include "Moments.h"
+#include "Settings.h"
 
 using namespace cv;
 using namespace std;
@@ -72,8 +72,7 @@ int  classifyUsingSavedCenters(bool bSaveState, std::string dataDir, std::string
         cout<<"Unable to load '"<<dataDir<<fileName<<".png' in kMeansExperimental()"<<endl;
         return 1;
     }
-    imshow("Input to KMeans",image);
-    //waitKey();
+    
     int channels = image.channels();
     if(channels != 3)
     {
@@ -112,6 +111,8 @@ int  classifyUsingSavedCenters(bool bSaveState, std::string dataDir, std::string
     sprintf(cn,"%s%s%s%d%s",dataDir.c_str(),fileName.c_str(),"Clusters",clusterCount,".png");
     imwrite(cn,pMouseInfo->graph);
     imshow("Clusters",pMouseInfo->graph);
+    if(WAIT_WIN)
+        waitKey();
     
     // Remove background classes
     loadBackgroundClasses(pMouseInfo->backgroundClasses, dataDir+"backgroundClasses."+ss.str()+".bin");
@@ -133,14 +134,16 @@ int  classifyUsingSavedCenters(bool bSaveState, std::string dataDir, std::string
     // Show final result after background removed
     imwrite(cn,pMouseInfo->graph);
     imshow("Desired Clusters", pMouseInfo->graph);
-    waitKey();
+    if(WAIT_WIN)
+        waitKey();
     
     // Convert to grayscale
     Mat grayScale,mask;
     mask.create(image.rows,image.cols,CV_8UC1);
     cvtColor(pMouseInfo->graph, mask, CV_BGR2GRAY);
     imshow("Gray Scale",mask);
-    waitKey();
+    if(WAIT_WIN)
+        waitKey();
     
     // Do opening to get rid of speckles
     erode(mask,mask,Mat());
@@ -149,13 +152,15 @@ int  classifyUsingSavedCenters(bool bSaveState, std::string dataDir, std::string
                                         Size( 2*dilationSize + 1, 2*dilationSize+1 ),
                                         Point( dilationSize, dilationSize ) );
     dilate(mask,mask,dilateElement);
-    imshow("Gray Scale",mask);
-    waitKey();
+    imshow("Opening",mask);
+    if(WAIT_WIN)
+        waitKey();
     
     // Do binary threshold
     threshold(mask, mask, 0, 255, THRESH_BINARY);
-    imshow("Mask", mask);
-    waitKey();
+    imshow("Binary", mask);
+    if(WAIT_WIN)
+        waitKey();
     
     // Convert float element to uchar
     sprintf(cn,"%s%s%s%d%s",dataDir.c_str(),fileName.c_str(),"Binary",clusterCount,".png");
@@ -176,8 +181,6 @@ int kMeansCustom(bool bSaveState, std::string dataDir, std::string fileName, int
 
     // Generate image data
     Mat image = imread(dataDir+fileName+".png");
-    imshow("Input to KMeans",image);
-    //waitKey();
     int ucharMax=pow(2,sizeof(uchar)*8) - 1;
     Point3i dataRange3D(ucharMax,ucharMax,ucharMax);
     cout<<"Fill points array"<<endl;
@@ -202,6 +205,8 @@ int kMeansCustom(bool bSaveState, std::string dataDir, std::string fileName, int
     sprintf(cn,"%s%s%s%d%s",dataDir.c_str(),fileName.c_str(),"Clusters",clusterCount,".png");
     imwrite(cn,pMouseInfo->graph);
     imshow("Clusters",pMouseInfo->graph);
+    if(WAIT_WIN)
+        waitKey();
     
    if(bSaveState)
    {
@@ -243,13 +248,15 @@ int kMeansCustom(bool bSaveState, std::string dataDir, std::string fileName, int
     sprintf(cn,"%s%s%s%d%s",dataDir.c_str(),fileName.c_str(),"ClustersNoBkgd",clusterCount,".png");
     imwrite(cn,pMouseInfo->graph);
     imshow("Desired Clusters", pMouseInfo->graph);
-    //waitKey();
+    if(WAIT_WIN)
+        waitKey();
     
     // Convert to grayscale
     mask.create(image.rows,image.cols,CV_8UC1);
     cvtColor(pMouseInfo->graph, mask, CV_BGR2GRAY);
     imshow("Gray Scale",mask);
-    //waitKey();
+    if(WAIT_WIN)
+        waitKey();
     
     // Do opening to get rid of speckles
     erode(mask,mask,Mat());
@@ -259,12 +266,14 @@ int kMeansCustom(bool bSaveState, std::string dataDir, std::string fileName, int
                                               Point( dilationSize, dilationSize ) );
     dilate(mask,mask,dilateElement);
     imshow("Gray Scale",mask);
-    //waitKey();
+    if(WAIT_WIN)
+        waitKey();
     
     // Do binary threshold
     threshold(mask, mask, 0, 255, THRESH_BINARY);
-    imshow("Mask", mask);
-    //waitKey();
+    imshow("Binary", mask);
+    if(WAIT_WIN)
+        waitKey();
     
     // Convert float element to uchar
     sprintf(cn,"%s%s%s%d%s",dataDir.c_str(),fileName.c_str(),"Binary",clusterCount,".png");
@@ -308,6 +317,8 @@ static void onMouse( int event, int x, int y, int /*flags*/, void* ptr )
         for(int i;i<pMouseInfo->points.size();i++)
             circle(pMouseInfo->graph, pMouseInfo->points[i], 5, CV_RGB(255,0,0), -1);
         imshow("Clusters", pMouseInfo->graph);
+        if(WAIT_WIN)
+            waitKey();
     }
 }
 

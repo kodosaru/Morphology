@@ -1062,11 +1062,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CountObjects/CountObjects/KMeansMethods.cpp"
-            timestampString = "420465004.186027"
+            timestampString = "420507095.739235"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "273"
-            endingLineNumber = "273"
+            startingLineNumber = "282"
+            endingLineNumber = "282"
             landmarkName = "kMeansCustom(bool bSaveState, std::string dataDir, std::string fileName, int maxClusters, int&amp; clusterCount)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1078,11 +1078,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CountObjects/CountObjects/KMeansMethods.cpp"
-            timestampString = "420464562.432178"
+            timestampString = "420507095.739235"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "194"
-            endingLineNumber = "194"
+            startingLineNumber = "197"
+            endingLineNumber = "197"
             landmarkName = "kMeansCustom(bool bSaveState, std::string dataDir, std::string fileName, int maxClusters, int&amp; clusterCount)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1094,11 +1094,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CountObjects/CountObjects/KMeansMethods.cpp"
-            timestampString = "420464562.432178"
+            timestampString = "420507095.739235"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "238"
-            endingLineNumber = "238"
+            startingLineNumber = "243"
+            endingLineNumber = "243"
             landmarkName = "kMeansCustom(bool bSaveState, std::string dataDir, std::string fileName, int maxClusters, int&amp; clusterCount)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1110,11 +1110,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CountObjects/CountObjects/KMeansMethods.cpp"
-            timestampString = "420464562.432178"
+            timestampString = "420507095.739235"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "244"
-            endingLineNumber = "244"
+            startingLineNumber = "249"
+            endingLineNumber = "249"
             landmarkName = "kMeansCustom(bool bSaveState, std::string dataDir, std::string fileName, int maxClusters, int&amp; clusterCount)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1126,11 +1126,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CountObjects/CountObjects/KMeansMethods.cpp"
-            timestampString = "420464562.432178"
+            timestampString = "420507095.739235"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "245"
-            endingLineNumber = "245"
+            startingLineNumber = "250"
+            endingLineNumber = "250"
             landmarkName = "kMeansCustom(bool bSaveState, std::string dataDir, std::string fileName, int maxClusters, int&amp; clusterCount)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1142,11 +1142,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CountObjects/CountObjects/KMeansMethods.cpp"
-            timestampString = "420464562.432178"
+            timestampString = "420507095.739235"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "202"
-            endingLineNumber = "202"
+            startingLineNumber = "205"
+            endingLineNumber = "205"
             landmarkName = "kMeansCustom(bool bSaveState, std::string dataDir, std::string fileName, int maxClusters, int&amp; clusterCount)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1158,11 +1158,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CountObjects/CountObjects/KMeansMethods.cpp"
-            timestampString = "420464562.432178"
+            timestampString = "420507095.739235"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "221"
-            endingLineNumber = "221"
+            startingLineNumber = "226"
+            endingLineNumber = "226"
             landmarkName = "kMeansCustom(bool bSaveState, std::string dataDir, std::string fileName, int maxClusters, int&amp; clusterCount)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1174,11 +1174,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CountObjects/CountObjects/KMeansMethods.cpp"
-            timestampString = "420464562.432178"
+            timestampString = "420507095.739235"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "222"
-            endingLineNumber = "222"
+            startingLineNumber = "227"
+            endingLineNumber = "227"
             landmarkName = "kMeansCustom(bool bSaveState, std::string dataDir, std::string fileName, int maxClusters, int&amp; clusterCount)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1222,7 +1222,23 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CountObjects/CountObjects/main.cpp"
-            timestampString = "420503300.86835"
+            timestampString = "420507319.549161"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "213"
+            endingLineNumber = "213"
+            landmarkName = "main(int argc, const char * argv[])"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CountObjects/CountObjects/main.cpp"
+            timestampString = "420507319.549161"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "215"
@@ -1237,28 +1253,12 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "CountObjects/CountObjects/main.cpp"
-            timestampString = "420503300.86835"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "217"
-            endingLineNumber = "217"
-            landmarkName = "main(int argc, const char * argv[])"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "CountObjects/CountObjects/CountObjectsMethods.cpp"
-            timestampString = "420393045.621086"
+            timestampString = "420507013.193749"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "73"
-            endingLineNumber = "73"
+            startingLineNumber = "74"
+            endingLineNumber = "74"
             landmarkName = "extractblobs(Mat&amp; regions, int clusterCount, unsigned short&amp; nRegion, vector&lt;vector&lt;PIXEL&gt;*&gt;&amp; regionLists, unsigned short&amp; nBlobs, vector&lt;vector&lt;PIXEL&gt;*&gt;&amp; blobLists, std::string outputDataDir, std::string outputFileName)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1270,11 +1270,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CountObjects/CountObjects/CountObjectsMethods.cpp"
-            timestampString = "420393486.650309"
+            timestampString = "420507013.193749"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "112"
-            endingLineNumber = "112"
+            startingLineNumber = "113"
+            endingLineNumber = "113"
             landmarkName = "extractblobs(Mat&amp; regions, int clusterCount, unsigned short&amp; nRegion, vector&lt;vector&lt;PIXEL&gt;*&gt;&amp; regionLists, unsigned short&amp; nBlobs, vector&lt;vector&lt;PIXEL&gt;*&gt;&amp; blobLists, std::string outputDataDir, std::string outputFileName)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1286,11 +1286,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CountObjects/CountObjects/CountObjectsMethods.cpp"
-            timestampString = "420393486.650309"
+            timestampString = "420507013.193749"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "101"
-            endingLineNumber = "101"
+            startingLineNumber = "102"
+            endingLineNumber = "102"
             landmarkName = "extractblobs(Mat&amp; regions, int clusterCount, unsigned short&amp; nRegion, vector&lt;vector&lt;PIXEL&gt;*&gt;&amp; regionLists, unsigned short&amp; nBlobs, vector&lt;vector&lt;PIXEL&gt;*&gt;&amp; blobLists, std::string outputDataDir, std::string outputFileName)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1302,11 +1302,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CountObjects/CountObjects/CountObjectsMethods.cpp"
-            timestampString = "420444688.640749"
+            timestampString = "420507013.193749"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "134"
-            endingLineNumber = "134"
+            startingLineNumber = "135"
+            endingLineNumber = "135"
             landmarkName = "extractblobs(Mat&amp; regions, int clusterCount, unsigned short&amp; nRegion, vector&lt;vector&lt;PIXEL&gt;*&gt;&amp; regionLists, unsigned short&amp; nBlobs, vector&lt;vector&lt;PIXEL&gt;*&gt;&amp; blobLists, std::string outputDataDir, std::string outputFileName)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1318,11 +1318,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CountObjects/CountObjects/CountObjectsMethods.cpp"
-            timestampString = "420393562.083868"
+            timestampString = "420507013.193749"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "123"
-            endingLineNumber = "123"
+            startingLineNumber = "124"
+            endingLineNumber = "124"
             landmarkName = "extractblobs(Mat&amp; regions, int clusterCount, unsigned short&amp; nRegion, vector&lt;vector&lt;PIXEL&gt;*&gt;&amp; regionLists, unsigned short&amp; nBlobs, vector&lt;vector&lt;PIXEL&gt;*&gt;&amp; blobLists, std::string outputDataDir, std::string outputFileName)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1334,11 +1334,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CountObjects/CountObjects/CountObjectsMethods.cpp"
-            timestampString = "420393686.645775"
+            timestampString = "420507013.193749"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "117"
-            endingLineNumber = "117"
+            startingLineNumber = "118"
+            endingLineNumber = "118"
             landmarkName = "extractblobs(Mat&amp; regions, int clusterCount, unsigned short&amp; nRegion, vector&lt;vector&lt;PIXEL&gt;*&gt;&amp; regionLists, unsigned short&amp; nBlobs, vector&lt;vector&lt;PIXEL&gt;*&gt;&amp; blobLists, std::string outputDataDir, std::string outputFileName)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1350,11 +1350,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CountObjects/CountObjects/CountObjectsMethods.cpp"
-            timestampString = "420444688.640749"
+            timestampString = "420507013.193749"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "130"
-            endingLineNumber = "130"
+            startingLineNumber = "131"
+            endingLineNumber = "131"
             landmarkName = "extractblobs(Mat&amp; regions, int clusterCount, unsigned short&amp; nRegion, vector&lt;vector&lt;PIXEL&gt;*&gt;&amp; regionLists, unsigned short&amp; nBlobs, vector&lt;vector&lt;PIXEL&gt;*&gt;&amp; blobLists, std::string outputDataDir, std::string outputFileName)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1366,11 +1366,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CountObjects/CountObjects/main.cpp"
-            timestampString = "420503300.86835"
+            timestampString = "420506391.917697"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "191"
-            endingLineNumber = "191"
+            startingLineNumber = "190"
+            endingLineNumber = "190"
             landmarkName = "main(int argc, const char * argv[])"
             landmarkType = "7">
          </BreakpointContent>
@@ -1382,11 +1382,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CountObjects/CountObjects/KMeansMethods.cpp"
-            timestampString = "420454139.801143"
+            timestampString = "420507095.739235"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "105"
-            endingLineNumber = "105"
+            startingLineNumber = "104"
+            endingLineNumber = "104"
             landmarkName = "classifyUsingSavedCenters(bool bSaveState, std::string dataDir, std::string fileName, int maxClusters, int&amp; clusterCount)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1414,11 +1414,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CountObjects/CountObjects/KMeansMethods.cpp"
-            timestampString = "420454139.801143"
+            timestampString = "420507095.739235"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "96"
-            endingLineNumber = "96"
+            startingLineNumber = "95"
+            endingLineNumber = "95"
             landmarkName = "classifyUsingSavedCenters(bool bSaveState, std::string dataDir, std::string fileName, int maxClusters, int&amp; clusterCount)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1430,11 +1430,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CountObjects/CountObjects/KMeansMethods.cpp"
-            timestampString = "420464562.432178"
+            timestampString = "420507095.739235"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "158"
-            endingLineNumber = "158"
+            startingLineNumber = "163"
+            endingLineNumber = "163"
             landmarkName = "classifyUsingSavedCenters(bool bSaveState, std::string dataDir, std::string fileName, int maxClusters, int&amp; clusterCount)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1462,11 +1462,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CountObjects/CountObjects/KMeansMethods.cpp"
-            timestampString = "420464562.432178"
+            timestampString = "420507095.739235"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "174"
-            endingLineNumber = "174"
+            startingLineNumber = "179"
+            endingLineNumber = "179"
             landmarkName = "kMeansCustom(bool bSaveState, std::string dataDir, std::string fileName, int maxClusters, int&amp; clusterCount)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1494,11 +1494,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CountObjects/CountObjects/KMeansMethods.cpp"
-            timestampString = "420465004.186027"
+            timestampString = "420507095.739235"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "255"
-            endingLineNumber = "255"
+            startingLineNumber = "262"
+            endingLineNumber = "262"
             landmarkName = "kMeansCustom(bool bSaveState, std::string dataDir, std::string fileName, int maxClusters, int&amp; clusterCount)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1510,11 +1510,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CountObjects/CountObjects/main.cpp"
-            timestampString = "420498496.505215"
+            timestampString = "420506391.917697"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "34"
-            endingLineNumber = "34"
+            startingLineNumber = "33"
+            endingLineNumber = "33"
             landmarkName = "split(const string &amp;txt, vector&lt;string&gt; &amp;strs, char ch)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1526,11 +1526,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CountObjects/CountObjects/main.cpp"
-            timestampString = "420498496.505215"
+            timestampString = "420506391.917697"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "40"
-            endingLineNumber = "40"
+            startingLineNumber = "39"
+            endingLineNumber = "39"
             landmarkName = "split(const string &amp;txt, vector&lt;string&gt; &amp;strs, char ch)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1542,11 +1542,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CountObjects/CountObjects/main.cpp"
-            timestampString = "420501477.917928"
+            timestampString = "420506391.917697"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "89"
-            endingLineNumber = "89"
+            startingLineNumber = "90"
+            endingLineNumber = "90"
             landmarkName = "readInReferences(vector&lt;HUREF&gt;&amp; references, string filePath)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1558,7 +1558,55 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CountObjects/CountObjects/main.cpp"
-            timestampString = "420500372.174076"
+            timestampString = "420506391.917697"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "75"
+            endingLineNumber = "75"
+            landmarkName = "readInReferences(vector&lt;HUREF&gt;&amp; references, string filePath)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CountObjects/CountObjects/main.cpp"
+            timestampString = "420506391.917697"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "87"
+            endingLineNumber = "87"
+            landmarkName = "readInReferences(vector&lt;HUREF&gt;&amp; references, string filePath)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CountObjects/CountObjects/main.cpp"
+            timestampString = "420506391.917697"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "73"
+            endingLineNumber = "73"
+            landmarkName = "readInReferences(vector&lt;HUREF&gt;&amp; references, string filePath)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CountObjects/CountObjects/main.cpp"
+            timestampString = "420506391.917697"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "74"
@@ -1574,28 +1622,60 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CountObjects/CountObjects/main.cpp"
-            timestampString = "420501477.917928"
+            timestampString = "420506391.917697"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "86"
-            endingLineNumber = "86"
-            landmarkName = "readInReferences(vector&lt;HUREF&gt;&amp; references, string filePath)"
+            startingLineNumber = "103"
+            endingLineNumber = "103"
+            landmarkName = "classifyObject(vector&lt;HUREF&gt; references, vector&lt;double&gt; object)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CountObjects/CountObjects/main.cpp"
-            timestampString = "420503293.811226"
+            timestampString = "420506391.917697"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "315"
-            endingLineNumber = "315"
-            landmarkName = "main(int argc, const char * argv[])"
+            startingLineNumber = "119"
+            endingLineNumber = "119"
+            landmarkName = "classifyObject(vector&lt;HUREF&gt; references, vector&lt;double&gt; object)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CountObjects/CountObjects/main.cpp"
+            timestampString = "420506391.917697"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "120"
+            endingLineNumber = "120"
+            landmarkName = "classifyObject(vector&lt;HUREF&gt; references, vector&lt;double&gt; object)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CountObjects/CountObjects/main.cpp"
+            timestampString = "420506391.917697"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "131"
+            endingLineNumber = "131"
+            landmarkName = "classifyObject(vector&lt;HUREF&gt; references, vector&lt;double&gt; object)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
