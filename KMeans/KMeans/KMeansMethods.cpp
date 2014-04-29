@@ -22,7 +22,7 @@ void kMeansCustom(bool bSaveState, string fileName )
 {
     MOUSEINFO mouseInfo,*pMouseInfo;
     pMouseInfo=&mouseInfo;
-    string dataDir="/Users/donj/workspace/cs585/Morphology/Data/Output/";
+    string dataDir="/Users/donj/workspace/Morphology/Data/Output/";
     const int maxClusters = 20;
     Mat points,centers,grayScale,mask;
     int clusterCount = 0;
@@ -69,15 +69,15 @@ void kMeansCustom(bool bSaveState, string fileName )
     waitKey();
     if(bSaveState)
     {
-        saveCompletedClasses(pMouseInfo->completedClasses, dataDir+"completedClasses."+ss.str()+".bin");
+        saveBackgroundClasses(pMouseInfo->backgroundClasses, dataDir+"backgroundClasses."+ss.str()+".bin");
     }
     else
     {
-        loadCompletedClasses(pMouseInfo->completedClasses, dataDir+"completedClasses."+ss.str()+".bin");
+        loadBackgroundClasses(pMouseInfo->backgroundClasses, dataDir+"backgroundClasses."+ss.str()+".bin");
         int channels=pMouseInfo->graph.channels();
         for(int i=0;i<pMouseInfo->labels.rows;i++)
         {
-            for(set<int>::iterator it=pMouseInfo->completedClasses.begin();it!=pMouseInfo->completedClasses.end();)
+            for(set<int>::iterator it=pMouseInfo->backgroundClasses.begin();it!=pMouseInfo->backgroundClasses.end();)
             {
                 if(pMouseInfo->labels.at<int>(i)==*it)
                 {
@@ -135,10 +135,10 @@ static void onMouse( int event, int x, int y, int /*flags*/, void* ptr )
             cout<<"Length of labels table exceeded"<<endl;
         int cls = pMouseInfo->labels.at<int>(i);
         printf("Class at (%d,%d) offset %d has value %d\n",x,y,i,cls);
-        if(pMouseInfo->completedClasses.find(cls) == pMouseInfo->completedClasses.end())
+        if(pMouseInfo->backgroundClasses.find(cls) == pMouseInfo->backgroundClasses.end())
         {
             cout<<"Inserting class "<<cls<<" into completed classes set"<<endl;
-            pMouseInfo->completedClasses.insert(cls);
+            pMouseInfo->backgroundClasses.insert(cls);
             int channels=pMouseInfo->graph.channels();
             for(int i=0;i<pMouseInfo->labels.rows;i++)
                 if(pMouseInfo->labels.at<int>(i)==cls)
@@ -154,15 +154,15 @@ static void onMouse( int event, int x, int y, int /*flags*/, void* ptr )
     }
 }
 
-void saveCompletedClasses(set<int>& completedClasses, string path)
+void saveBackgroundClasses(set<int>& backgroundClasses, string path)
 {
     cout<<"Save completed classes"<<endl;
     ostringstream ss;
-    ss<<completedClasses.size();
-    Mat vecCvt((int)completedClasses.size(),1,CV_32S);
+    ss<<backgroundClasses.size();
+    Mat vecCvt((int)backgroundClasses.size(),1,CV_32S);
     
     // Print completed classes set
-    for(set<int>::iterator it=completedClasses.begin();it!=completedClasses.end();)
+    for(set<int>::iterator it=backgroundClasses.begin();it!=backgroundClasses.end();)
     {
         printf("Completed classes vector has value %d\n",*it);
         ++it;
@@ -170,7 +170,7 @@ void saveCompletedClasses(set<int>& completedClasses, string path)
     
     // Copy completed classes to matrix
     int i=0;
-    for(set<int>::iterator it=completedClasses.begin();it!=completedClasses.end();)
+    for(set<int>::iterator it=backgroundClasses.begin();it!=backgroundClasses.end();)
     {
         vecCvt.at<int>(i,0)=*it;
         ++it;
@@ -178,7 +178,7 @@ void saveCompletedClasses(set<int>& completedClasses, string path)
     }
     
     // Print matrix before save
-    for(int i=0;i<completedClasses.size();i++)
+    for(int i=0;i<backgroundClasses.size();i++)
     {
         printf("Completed classess matrix before save at location %d has value %d\n",i,vecCvt.at<int>(i,0));
     }
@@ -187,7 +187,7 @@ void saveCompletedClasses(set<int>& completedClasses, string path)
     saveMat(vecCvt, path);
 }
 
-void loadCompletedClasses(set<int>& completedClasses, string path)
+void loadBackgroundClasses(set<int>& backgroundClasses, string path)
 {
     cout<<"Load completed classes"<<endl;
     Mat vecCvt;
@@ -207,11 +207,11 @@ void loadCompletedClasses(set<int>& completedClasses, string path)
     // Copy completed classes to set
     for(int i=0;i<nClasses;i++)
     {
-        completedClasses.insert(vecCvt.at<int>(i,0));
+        backgroundClasses.insert(vecCvt.at<int>(i,0));
     }
     
     // Print completed classes set
-    for(set<int>::iterator it=completedClasses.begin();it!=completedClasses.end();)
+    for(set<int>::iterator it=backgroundClasses.begin();it!=backgroundClasses.end();)
     {
         printf("Completed classes vector has value %d\n",*it);
         ++it;

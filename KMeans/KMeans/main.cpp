@@ -29,7 +29,7 @@ int main2( int argc, char* argv[] )
 {
     MOUSEINFO mouseInfo,*pMouseInfo;
     pMouseInfo=&mouseInfo;
-    string dataDir="/Users/donj/workspace/cs585/Morphology/Data/Output/";
+    string dataDir="/Users/donj/workspace/Morphology/Data/Output/";
     const int maxClusters = 20;
     Mat points,centers,grayScale,mask;
     int clusterCount = 0;
@@ -92,15 +92,15 @@ int main2( int argc, char* argv[] )
     waitKey();
     if(bSaveState)
     {
-        saveCompletedClasses(pMouseInfo->completedClasses, dataDir+"completedClasses."+ss.str()+".bin");
+        saveBackgroundClasses(pMouseInfo->backgroundClasses, dataDir+"backgroundClasses."+ss.str()+".bin");
     }
     else
     {
-        loadCompletedClasses(pMouseInfo->completedClasses, dataDir+"completedClasses."+ss.str()+".bin");
+        loadBackgroundClasses(pMouseInfo->backgroundClasses, dataDir+"backgroundClasses."+ss.str()+".bin");
         int channels=pMouseInfo->graph.channels();
         for(int i=0;i<pMouseInfo->labels.rows;i++)
         {
-            for(set<int>::iterator it=pMouseInfo->completedClasses.begin();it!=pMouseInfo->completedClasses.end();)
+            for(set<int>::iterator it=pMouseInfo->backgroundClasses.begin();it!=pMouseInfo->backgroundClasses.end();)
             {
                 if(pMouseInfo->labels.at<int>(i)==*it)
                 {
@@ -126,7 +126,7 @@ int main2( int argc, char* argv[] )
     imshow("mask1",mask);
     for(int i=0;i<pMouseInfo->labels.rows;i++)
     {
-        for(set<int>::iterator it=pMouseInfo->completedClasses.begin();it!=pMouseInfo->completedClasses.end();)
+        for(set<int>::iterator it=pMouseInfo->backgroundClasses.begin();it!=pMouseInfo->backgroundClasses.end();)
         {
             if(pMouseInfo->labels.at<int>(i)==*it)
             {

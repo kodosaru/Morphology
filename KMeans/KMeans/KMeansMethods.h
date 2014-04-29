@@ -28,14 +28,14 @@ struct mouseInfo
     std::vector<cv::Point2i> points;
     cv::Mat labels;
     cv::Mat graph;
-    std::set<int> completedClasses;
+    std::set<int> backgroundClasses;
 };
 typedef struct mouseInfo MOUSEINFO;
 
 static void onMouse( int event, int x, int y, int /*flags*/, void* /*param*/ );
 void kMeansCustom(bool bSaveState, cv::string fileName );
-void saveCompletedClasses(std::set<int>& completedClasses, std::string path);
-void loadCompletedClasses(std::set<int>& completedClasses, std::string path);
+void saveBackgroundClasses(std::set<int>& backgroundClasses, std::string path);
+void loadBackgroundClasses(std::set<int>& backgroundClasses, std::string path);
 void colorTabTest(int clusterCount, std::string dataDir);
 void createGraph3DGrayScale(cv::Mat& graph, cv::Mat& labels, int clusterCount);
 void createGraph3D(cv::Mat& graph, cv::Mat& labels, int clusterCount, std::string dataDir, bool bSaveState);

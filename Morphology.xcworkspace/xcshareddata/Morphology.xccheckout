@@ -5,36 +5,36 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>505736DA-D0FB-4683-A927-D27C4B867197</string>
+	<string>77C71E62-42E8-46ED-AAC3-2B883B7E7517</string>
 	<key>IDESourceControlProjectName</key>
 	<string>Morphology</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>C3CFEEFD-412C-40A6-B952-5F1A2980D9A8</key>
-		<string>https://github.com/kodosaru/cs585.git</string>
+		<key>3D3C8391-3D5F-4220-A127-136E0485B853</key>
+		<string>https://github.com/kodosaru/Morphology.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>Morphology/Morphology.xcworkspace</string>
+	<string>Morphology.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>C3CFEEFD-412C-40A6-B952-5F1A2980D9A8</key>
-		<string>../..</string>
+		<key>3D3C8391-3D5F-4220-A127-136E0485B853</key>
+		<string>..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/kodosaru/cs585.git</string>
+	<string>https://github.com/kodosaru/Morphology.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>C3CFEEFD-412C-40A6-B952-5F1A2980D9A8</string>
+	<string>3D3C8391-3D5F-4220-A127-136E0485B853</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>C3CFEEFD-412C-40A6-B952-5F1A2980D9A8</string>
+			<string>3D3C8391-3D5F-4220-A127-136E0485B853</string>
 			<key>IDESourceControlWCCName</key>
-			<string>cs585</string>
+			<string>Morphology</string>
 		</dict>
 	</array>
 </dict>
