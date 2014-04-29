@@ -13,58 +13,134 @@
 #include "KMeansMethods.h"
 #include "Moments.h"
 #include <sstream>
+#include <fstream>
+#include <algorithm>
 
 #define FILLED -1
 
 using namespace cv;
 using namespace std;
 
-void classifyObjects(vector<vector<float>> references, vector<vector<float>> objects, vector<int> classification)
+long split(const string &txt, vector<string> &strs, char ch)
 {
-    float tolerance = 5.0;
+    unsigned long pos = txt.find( ch );
+    unsigned long initialPos = 0;
+    strs.clear();
     
-    if(references[0].size()!=objects[0].size())
+    // Decompose statement
+    string  sTemp;
+    while( pos != std::string::npos )
     {
-        cout<<"Unable to compute Euclidean distance in classifyObject() - vectors are of a different length";
-        return;
+        sTemp = txt.substr(initialPos, pos - initialPos);
+        if(sTemp.size())
+            strs.push_back(sTemp);
+        initialPos = pos + 1;
+        
+        pos = txt.find( ch, initialPos );
     }
     
-    // Create a vector whose index is the object ID and whose value is the classification ID
-    for(int i=0;i<objects.size();i++)
-    {
-        // Negative one equal yet to be classified
-        classification.push_back(-1);
-    }
-
-    double minDist=DBL_MAX, tempDist,sum=0.0;
-    int referenceNdx = -1;
-    for(int i=0;i<objects.size();i++)
-    {
-        for(int j=0;j<references.size();j++)
-        {
-            sum = 0.0;
-            for(int k=0;k<references[0].size();k++)
-            {
-                sum += POW2(objects[i][k] - references[j][k]);
-            }
-            tempDist = sqrt(sum);
-            if(tempDist < tolerance && tempDist < minDist)
-            {
-                referenceNdx = j;
-                minDist = tempDist;
-            }
-        }
-        classification[i] = referenceNdx;
-        cout<<"Object["<<i<<"]'s descriptor is "<<minDist<<"away from and closest to reference["<<referenceNdx<<"]'s descriptor"<<endl;
-    }
+    // Add the last one
+    long min = pos < txt.size() ? pos : txt.size();
+    sTemp = txt.substr( initialPos, min - initialPos + 1 );
+    if(sTemp.size())
+        strs.push_back(sTemp);
+    
+    return strs.size();
 }
 
+struct huRef
+{
+    string objectDesc;
+    vector<double> val;
+};
+typedef struct huRef HUREF;
 
+void readInReferences(vector<HUREF>& references, string filePath)
+{
+    ifstream ref (filePath);
+    cout <<filePath<<endl;
+    string line;
+    HUREF temp;
+    vector<string> strs;
+    bool bLabel;
+	if (ref.is_open())
+	{
+		while (ref.good())
+		{
+            bLabel = true;
+			getline(ref,line);
+			cout << line << endl;
+            split(line, strs, ' ');
+            for(int i=0;i<strs.size();i++)
+            {
+                if(bLabel)
+                {
+                    bLabel = false;
+                    temp.objectDesc = strs[i];
+                }
+                else{
+                    temp.val.push_back(atof(strs[i].c_str()));
+                    cout<<temp.objectDesc<<" Hu val: "<<temp.val[i-1]<<endl;
+                }
+            }
+            references.push_back(temp);
+            temp.val.clear();
+		}
+        ref.close();
+	}
+	else
+	{
+		cout << "Unable to open file " << filePath << endl;
+	}
+}
+
+int classifyObject(vector<HUREF> references, vector<double> object)
+{
+    float tolerance = 1.0;
+    
+    if(references[0].val.size() != object.size())
+    {
+        cout<<"Unable to compute Euclidean distance in classifyObject() - vectors are of a different length";
+        return -INT_MAX;
+    }
+    
+    double minDist=DBL_MAX, tempDist,sum=0.0;
+    int referenceNdx = -1;
+    // Loop through all of the reference Hu variant vectors
+    for(int j=0;j<references.size();j++)
+    {
+        sum = 0.0;
+        // For each reference object vector, loop through the elements
+        for(int k=0;k<references[j].val.size();k++)
+        {
+            sum += POW2(object[k] - references[j].val[k]);
+        }
+        tempDist = sqrt(sum);
+        if(tempDist < tolerance && tempDist < minDist)
+        {
+            referenceNdx = j;
+            minDist = tempDist;
+        }
+    }
+    
+    cout<<"Object's descriptor is "<<minDist<<"away from and closest to "<<references[referenceNdx].objectDesc<<"["<<referenceNdx<<"]'s descriptor"<<endl;
+    return referenceNdx;
+}
+
+void readInReference(vector<vector<string>> reference)
+{
+    
+}
 using namespace std;
 using namespace cv;
 
 int main(int argc, const char * argv[])
 {
+    //vector<HUREF> dummy;
+    //string path="/Users/donj/references.txt";
+    //readInReferences(dummy, path);
+    //return 0;
+    
     // Input arguments
     // 0 program name
     // 1 full input file name with extension
@@ -138,9 +214,15 @@ int main(int argc, const char * argv[])
     // Extract a list of object candiate blobs and the list of pixels in each
     extractblobs(regions, clusterCount, nRegions, regionLists, nBlobs, blobLists, outputDataDir, outputFileName);
     
-    // Calculate centroids of blobs
+    // Read in region file
     sprintf(cn,"%s%s%s%d%s",outputDataDir.c_str(),outputFileName.c_str(),"Regions",clusterCount,".png");
     Mat tempRegions=imread(cn,CV_8UC1);
+    
+    // Read in Hu invariants reference vectors and classify blobs
+    vector<HUREF> references;
+    readInReferences(references, outputDataDir+"references.txt");
+    
+    // Calculate centroids of blobs
     for(int i=0;i<nBlobs;i++)
     {
         if(blobLists[i]!=nullptr)
@@ -210,6 +292,7 @@ int main(int argc, const char * argv[])
              cout<<"| "<<0<<" "<<eval.at<double>(0,0)<<"|"<<endl;
              cout<<"Eccentricity: "<<eccentricity(*blobLists[i])<<endl;
              covar->release();
+             eigenvalueMatrix->release();
 
              printf("Raw Moments: %0.2f  %0.2f %0.2f %0.2f %0.2f %0.2f %0.2f  %0.2f %0.2f %0.2f\n",Mij(*blobLists[i],0,0), Mij(*blobLists[i],1,0),  Mij(*blobLists[i],0,1),  Mij(*blobLists[i],2,0),  Mij(*blobLists[i],1,1),  Mij(*blobLists[i],0,2), Mij(*blobLists[i],3,0),  Mij(*blobLists[i],2,1), Mij(*blobLists[i],1,2),  Mij(*blobLists[i],0,3));
              printf("Central Moments: %0.2f  %0.2f %0.2f %0.2f %0.2f %0.2f %0.2f\n",muij(*blobLists[i],2,0), muij(*blobLists[i],1,1), muij(*blobLists[i],0,2),muij(*blobLists[i],3,0), muij(*blobLists[i],2,1), muij(*blobLists[i],1,2), muij(*blobLists[i],0,3));
@@ -227,24 +310,18 @@ int main(int argc, const char * argv[])
             for(int j=0;j<NUM_HU;j++)
                 printf(" %0.2f",huMoments[i][j]);
             cout<<endl;
+            
+            // Classify blobs based on Hu invariants
+            classifyObject(references, huMoments[i]);
         }
         else
         {
             cout<<"Blob "<<i<<" has a null pointer"<<endl;
         }
         
-        cout<<"Euclidean distance between object descriptions"<<endl;
-        for(int i=0;i<nBlobs;i++)
-            printf("\t%d",i);
-        cout<<endl;
-        double dist = 0.0;
-        /*for(int i=0;i<nBlobs;i++)
-         for(int j=0;j<nBlobs;j++)
-         {
-         if(i<j)
-         euclidDist(huMoments[i], vector<double> v);
-         }*/
-    }
+        
+    } // End of blobs
+
 
     destroyRegionBlobLists(regionLists, blobLists);
 
