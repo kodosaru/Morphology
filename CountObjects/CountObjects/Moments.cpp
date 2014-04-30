@@ -10,9 +10,115 @@
 #include "Moments.h"
 #include "FloodFillMethods.h"
 #include "math.h"
+#include <fstream>
+#include <algorithm>
 
 using namespace cv;
 using namespace std;
+
+long split(const string &txt, vector<string> &strs, char ch)
+{
+    unsigned long pos = txt.find( ch );
+    unsigned long initialPos = 0;
+    strs.clear();
+    
+    // Decompose statement
+    string  sTemp;
+    while( pos != std::string::npos )
+    {
+        sTemp = txt.substr(initialPos, pos - initialPos);
+        if(sTemp.size())
+            strs.push_back(sTemp);
+        initialPos = pos + 1;
+        
+        pos = txt.find( ch, initialPos );
+    }
+    
+    // Add the last one
+    long min = pos < txt.size() ? pos : txt.size();
+    sTemp = txt.substr( initialPos, min - initialPos + 1 );
+    if(sTemp.size())
+        strs.push_back(sTemp);
+    
+    return strs.size();
+}
+
+void readInReferences(vector<HUREF>& references, string filePath)
+{
+    ifstream ref (filePath);
+    cout <<filePath<<endl;
+    string line;
+    HUREF temp;
+    vector<string> strs;
+    bool bLabel;
+	if (ref.is_open())
+	{
+		while (ref.good())
+		{
+            bLabel = true;
+			getline(ref,line);
+            if(line.size() == 0)
+                break;
+			cout << line << endl;
+            split(line, strs, ' ');
+            for(int i=0;i<strs.size();i++)
+            {
+                if(bLabel)
+                {
+                    bLabel = false;
+                    temp.objectDesc = strs[i];
+                }
+                else{
+                    temp.val.push_back(atof(strs[i].c_str()));
+                    cout<<temp.objectDesc<<" Hu val: "<<temp.val[i-1]<<endl;
+                }
+            }
+            references.push_back(temp);
+            temp.val.clear();
+		}
+        ref.close();
+	}
+	else
+	{
+		cout << "Unable to open file " << filePath << endl;
+	}
+}
+
+int classifyObject(vector<HUREF> references, int nObject, vector<double> object)
+{
+    // Actually using square of distance to avoid taking square root
+    float tolerance = 1.0;
+    
+    if(references[0].val.size() != object.size())
+    {
+        cout<<"Unable to compute Euclidean distance in classifyObject() - vectors are of a different length";
+        return -INT_MAX;
+    }
+    
+    double minDist=DBL_MAX, tempDist;
+    int referenceNdx = -INT_MAX;
+    // Loop through all of the reference Hu variant vectors
+    for(int j=0;j<references.size();j++)
+    {
+        tempDist = 0.0;
+        // For each reference object vector, loop through the elements
+        for(int k=0;k<references[j].val.size();k++)
+        {
+            tempDist += POW2(object[k] - references[j].val[k]);
+        }
+        if(tempDist < tolerance && tempDist < minDist)
+        {
+            referenceNdx = j;
+            minDist = tempDist;
+        }
+    }
+    
+    if(referenceNdx != -INT_MAX)
+        cout<<"Object's["<<nObject<<"] descriptor is "<<minDist<<" away from and closest to "<<references[referenceNdx].objectDesc<<"["<<referenceNdx<<"]'s descriptor"<<endl;
+    else
+        cout<<"Object's["<<nObject<<"] descriptor is does not match any descriptors"<<endl;
+    return referenceNdx;
+}
 
 // Orientaton Angle
 Mat* orientation(vector<PIXEL> v)

@@ -14,129 +14,105 @@
 #include "Moments.h"
 #include "Settings.h"
 #include <sstream>
-#include <fstream>
-#include <algorithm>
 
 using namespace cv;
 using namespace std;
 
-long split(const string &txt, vector<string> &strs, char ch)
-{
-    unsigned long pos = txt.find( ch );
-    unsigned long initialPos = 0;
-    strs.clear();
-    
-    // Decompose statement
-    string  sTemp;
-    while( pos != std::string::npos )
-    {
-        sTemp = txt.substr(initialPos, pos - initialPos);
-        if(sTemp.size())
-            strs.push_back(sTemp);
-        initialPos = pos + 1;
-        
-        pos = txt.find( ch, initialPos );
-    }
-    
-    // Add the last one
-    long min = pos < txt.size() ? pos : txt.size();
-    sTemp = txt.substr( initialPos, min - initialPos + 1 );
-    if(sTemp.size())
-        strs.push_back(sTemp);
-    
-    return strs.size();
-}
 
-struct huRef
-{
-    string objectDesc;
-    vector<double> val;
-};
-typedef struct huRef HUREF;
 
-void readInReferences(vector<HUREF>& references, string filePath)
-{
-    ifstream ref (filePath);
-    cout <<filePath<<endl;
-    string line;
-    HUREF temp;
-    vector<string> strs;
-    bool bLabel;
-	if (ref.is_open())
-	{
-		while (ref.good())
-		{
-            bLabel = true;
-			getline(ref,line);
-            if(line.size() == 0)
-                break;
-			cout << line << endl;
-            split(line, strs, ' ');
-            for(int i=0;i<strs.size();i++)
-            {
-                if(bLabel)
-                {
-                    bLabel = false;
-                    temp.objectDesc = strs[i];
-                }
-                else{
-                    temp.val.push_back(atof(strs[i].c_str()));
-                    cout<<temp.objectDesc<<" Hu val: "<<temp.val[i-1]<<endl;
-                }
-            }
-            references.push_back(temp);
-            temp.val.clear();
-		}
-        ref.close();
-	}
-	else
-	{
-		cout << "Unable to open file " << filePath << endl;
-	}
-}
+#include "Harris.h"
 
-int classifyObject(vector<HUREF> references, vector<double> object)
-{
-    // Actually using square of distance to avoid taking square root
-    float tolerance = 1.0;
-    
-    if(references[0].val.size() != object.size())
-    {
-        cout<<"Unable to compute Euclidean distance in classifyObject() - vectors are of a different length";
-        return -INT_MAX;
-    }
-    
-    double minDist=DBL_MAX, tempDist;
-    int referenceNdx = -INT_MAX;
-    // Loop through all of the reference Hu variant vectors
-    for(int j=0;j<references.size();j++)
-    {
-        tempDist = 0.0;
-        // For each reference object vector, loop through the elements
-        for(int k=0;k<references[j].val.size();k++)
-        {
-            tempDist += POW2(object[k] - references[j].val[k]);
-        }
-        if(tempDist < tolerance && tempDist < minDist)
-        {
-            referenceNdx = j;
-            minDist = tempDist;
-        }
-    }
-    
-    if(referenceNdx != -INT_MAX)
-        cout<<"Object's descriptor is "<<minDist<<" away from and closest to "<<references[referenceNdx].objectDesc<<"["<<referenceNdx<<"]'s descriptor"<<endl;
-    else
-        cout<<"Object's descriptor is does not match any descriptors"<<endl;
-    return referenceNdx;
-}
+/**
+ * @function cornerHarris_Demo.cpp
+ * @brief Demo code for detecting corners using Harris-Stephens method
+ * @author OpenCV team
+ */
 
-void readInReference(vector<vector<string>> reference)
-{
-    
-}
-using namespace std;
+#include "opencv2/highgui/highgui.hpp"
+#include "opencv2/imgproc/imgproc.hpp"
+#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+
 using namespace cv;
+using namespace std;
+
+/// Global variables
+Mat src_gray;
+int thresh = 200;
+int max_thresh = 255;
+
+const char* source_window = "Source image";
+const char* corners_window = "Corners detected";
+
+/// Function header
+void cornerHarris_demo( int, void* );
+
+/**
+ * @function main
+ */
+int harris(Mat& src)
+{
+    /// Load source image and convert it to gray
+    //src = imread( argv[1], 1 );
+    //cvtColor( src, src_gray, COLOR_BGR2GRAY );
+    src.copyTo(src_gray);
+    
+    /// Create a window and a trackbar
+    //namedWindow( source_window, WINDOW_AUTOSIZE );
+    Size sz=src.size();
+    //createTrackbar( "Threshold: ", source_window, &thresh, max_thresh, cornerHarris_demo, &sz );
+    //imshow( source_window, src );
+    
+    cornerHarris_demo( 0, &sz );
+    
+    //waitKey(0);
+    return(0);
+}
+
+/**
+ * @function cornerHarris_demo
+ * @brief Executes the corner detection and draw a circle around the possible corners
+ */
+void cornerHarris_demo( int, void* userData )
+{
+    Size sz = *((Point*)&userData);
+    cout << sz << endl;
+    
+    Mat dst, dst_norm, dst_norm_scaled;
+    dst = Mat::zeros( sz, CV_32FC1 );
+    
+    /// Detector parameters
+    int blockSize = 2;
+    int apertureSize = 3;
+    double k = 0.04;
+    
+    /// Detecting corners
+    cornerHarris( src_gray, dst, blockSize, apertureSize, k, BORDER_DEFAULT );
+    
+    /// Normalizing
+    normalize( dst, dst_norm, 0, 255, NORM_MINMAX, CV_32FC1, Mat() );
+    convertScaleAbs( dst_norm, dst_norm_scaled );
+    
+    /// Drawing a circle around corners
+    for( int j = 0; j < dst_norm.rows ; j++ )
+    { for( int i = 0; i < dst_norm.cols; i++ )
+    {
+        if( (int) dst_norm.at<float>(j,i) > thresh )
+        {
+            circle( dst_norm_scaled, Point( i, j ), 5,  Scalar(0), 2, 8, 0 );
+        }
+    }
+    }
+    /// Showing the result
+    namedWindow( corners_window, WINDOW_AUTOSIZE );
+    imshow( corners_window, dst_norm_scaled );
+}
+
+
+
+
+
 
 int main(int argc, const char * argv[])
 {
@@ -212,6 +188,66 @@ int main(int argc, const char * argv[])
     // Extract a list of object candiate blobs and the list of pixels in each
     extractblobs(regions, clusterCount, nRegions, regionLists, nBlobs, blobLists, outputDataDir, outputFileName);
     
+    // Put blobs in their own images
+    vector<Mat> blobImages;
+    PIXEL blobPix;
+    stringstream ss;
+    destroyAllWindows();
+    for(int i=0;i<nBlobs;i++)
+    {
+        blobImages.push_back(Mat(regions.rows,regions.cols,CV_8U));
+        blobImages[i]=Scalar(0,0,0,0);
+        cout<<"size of blob "<<i<<" is "<<blobLists[i]->size()<<endl;
+        for(int j=0;j<blobLists[i]->size();j++)
+        {
+            blobPix=(*blobLists[i])[j];
+            if( blobPix.val[0])
+                blobImages[i].at<uchar>(blobPix.pt)=255;
+        }
+        ss << i;
+        string sVal = ss.str();
+        //namedWindow("Blob"+sVal,WINDOW_NORMAL);
+        //imshow("Blob"+sVal,blobImages[i]);
+        //harris(blobImages[i]);
+        
+        Mat dst, dst_norm, dst_norm_scaled;
+        dst = Mat::zeros(regions.size(), CV_32FC1 );
+        
+        /// Detector parameters
+        int blockSize = 8;
+        int apertureSize = 3;
+        double k = 0.04;
+        
+        /// Detecting corners
+        cornerHarris(blobImages[i] , dst, blockSize, apertureSize, k, BORDER_DEFAULT );
+        
+        /// Normalizing
+        normalize( dst, dst_norm, 0, 255, NORM_MINMAX, CV_32FC1, Mat() );
+        convertScaleAbs( dst_norm, dst_norm_scaled );
+        
+        /// Drawing a circle around corners
+        int corners=0;
+        for( int j = 0; j < dst_norm.rows ; j++ )
+        { for( int k = 0; k < dst_norm.cols; k++ )
+        {
+            if( (int) dst_norm.at<float>(j,k) > thresh )
+            {
+                circle( dst_norm_scaled, Point( k, j ), 5,  Scalar(0), 2, 8, 0 );
+                ++corners;
+            }
+        }
+        }
+        cout<<"Blob["<<i<<"] has "<<++corners<<" corners"<<endl;
+        /// Showing the result
+        namedWindow( corners_window, WINDOW_AUTOSIZE );
+        imshow( corners_window, dst_norm_scaled );
+
+        waitKey();
+    }
+    if(WAIT_WIN)
+        waitKey();
+    destroyAllWindows();
+
     // Read in region file
     sprintf(cn,"%s%s%s%d%s",outputDataDir.c_str(),outputFileName.c_str(),"Regions",clusterCount,".png");
     Mat tempRegions=imread(cn,CV_8UC1);
@@ -262,6 +298,7 @@ int main(int argc, const char * argv[])
     }
     sprintf(cn,"%s%s%s%d%s",outputDataDir.c_str(),outputFileName.c_str(),"Blobs",clusterCount,".png");
     imwrite(cn,tempRegions);
+    namedWindow("Moments, Centroid and Major Axis",WINDOW_NORMAL);
     imshow("Moments, Centroid and Major Axis",tempRegions);
     if(WAIT_WIN)
         waitKey();
@@ -301,6 +338,7 @@ int main(int argc, const char * argv[])
              */
             
             // Hu moments
+            cout<<endl;
             vector<vector<double>> huMoments(nBlobs);
             for(int j=1;j<=NUM_HU;j++)
             {
@@ -308,11 +346,11 @@ int main(int argc, const char * argv[])
             }
             cout<<"Hu Invarients:";
             for(int j=0;j<NUM_HU;j++)
-                printf(" %0.2f",huMoments[i][j]);
+                printf(" %0.6f",huMoments[i][j]);
             cout<<endl;
             
             // Classify blobs based on Hu invariants
-            classifyObject(references, huMoments[i]);
+            classifyObject(references, i, huMoments[i]);
         }
         else
         {

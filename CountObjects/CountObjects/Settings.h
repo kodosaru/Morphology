@@ -10,7 +10,7 @@
 #define CountObjects_Settings_h
 
 #define FILLED -1
-#define NUM_HU 7
-#define WAIT_WIN 1
+#define NUM_HU 8
+#define WAIT_WIN 0
 
 #endif

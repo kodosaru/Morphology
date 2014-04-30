@@ -16,7 +16,15 @@
 #define POW2(val) ((val) * (val))
 #define POW3(val) ((val) * (val) * (val))
 
-
+long split(const std::string &txt, cv::vector<std::string> &strs, char ch);
+struct huRef
+{
+    std::string objectDesc;
+    cv::vector<double> val;
+};
+typedef struct huRef HUREF;
+void readInReferences(cv::vector<HUREF>& references, std::string filePath);
+int classifyObject(cv::vector<HUREF> references, int nObject, cv::vector<double> object);
 // Hu Translation, scale, and rotation invarient moments (+I8 recommended by Flusser & Suk)
 double Hui(cv::vector<PIXEL> v, long i);
 // Orientaton Angle

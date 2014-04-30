@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		723CDFD5191081CA00DE2A8A /* Harris.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 723CDFD3191081CA00DE2A8A /* Harris.cpp */; };
 		72951E9D190C5DE600618A74 /* CountObjectsMethods.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 72951E96190C5DE600618A74 /* CountObjectsMethods.cpp */; };
 		72951E9E190C5DE600618A74 /* FloodFillMethods.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 72951E98190C5DE600618A74 /* FloodFillMethods.cpp */; };
 		72951E9F190C5DE600618A74 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 72951E9A190C5DE600618A74 /* main.cpp */; };
@@ -79,6 +80,8 @@
 
 /* Begin PBXFileReference section */
 		723CDFD2191068ED00DE2A8A /* Settings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Settings.h; sourceTree = "<group>"; };
+		723CDFD3191081CA00DE2A8A /* Harris.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Harris.cpp; sourceTree = "<group>"; };
+		723CDFD4191081CA00DE2A8A /* Harris.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Harris.h; sourceTree = "<group>"; };
 		72951E96190C5DE600618A74 /* CountObjectsMethods.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CountObjectsMethods.cpp; sourceTree = "<group>"; };
 		72951E97190C5DE600618A74 /* CountObjectsMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountObjectsMethods.h; sourceTree = "<group>"; };
 		72951E98190C5DE600618A74 /* FloodFillMethods.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FloodFillMethods.cpp; sourceTree = "<group>"; };
@@ -273,6 +276,8 @@
 				72CA39A118F437A9001401AB /* CountObjects.1 */,
 				72CA3A1B18F45859001401AB /* CannyMethods.cpp */,
 				72CA3A1C18F45859001401AB /* CannyMethods.h */,
+				723CDFD3191081CA00DE2A8A /* Harris.cpp */,
+				723CDFD4191081CA00DE2A8A /* Harris.h */,
 			);
 			path = CountObjects;
 			sourceTree = "<group>";
@@ -353,6 +358,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				723CDFD5191081CA00DE2A8A /* Harris.cpp in Sources */,
 				72951E9E190C5DE600618A74 /* FloodFillMethods.cpp in Sources */,
 				72951F28190C6CC400618A74 /* Archive.cpp in Sources */,
 				72951E9D190C5DE600618A74 /* CountObjectsMethods.cpp in Sources */,
