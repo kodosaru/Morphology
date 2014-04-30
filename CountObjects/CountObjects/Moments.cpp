@@ -7,14 +7,50 @@
 //
 //  From http://en.wikipedia.org/wiki/Image_moment
 
+#include "opencv2/highgui/highgui.hpp"
+#include "opencv2/imgproc/imgproc.hpp"
 #include "Moments.h"
 #include "FloodFillMethods.h"
 #include "math.h"
+#include "Settings.h"
 #include <fstream>
 #include <algorithm>
 
 using namespace cv;
 using namespace std;
+
+void blobStatistics(vector<vector<PIXEL>*>& blobLists, int nBlob)
+{
+    Mat *covar = covarianceMatrix(*blobLists[nBlob]);
+    cout<<"Covariance Matrix"<<endl;
+    cout<<"| "<<covar->at<double>(0,0)<<" "<<covar->at<double>(0,1)<<"|"<<endl;
+    cout<<"| "<<covar->at<double>(1,0)<<" "<<covar->at<double>(1,1)<<"|"<<endl;
+    Mat eval, evec;
+    
+    eigen((*covar),eval,evec);
+    // Printing out column order and taking negative of eigenvectors like MATLAB
+    evec = -1.0 * evec;
+    cout<<"Eigenvector Matrix"<<endl;
+    cout<<"| "<<evec.at<double>(1,0)<<" "<<evec.at<double>(0,0)<<"|"<<endl;
+    cout<<"| "<<evec.at<double>(1,1)<<" "<<evec.at<double>(0,1)<<"|"<<endl;
+    
+    cout<<"OpenCV Calc Eigenvalue Matrix"<<endl;
+    cout<<"| "<<eval.at<double>(1,0)<<" "<<0<<"|"<<endl;
+    cout<<"| "<<0<<" "<<eval.at<double>(0,0)<<"|"<<endl;
+    evec = *eigenvalueMatrix(*blobLists[nBlob]);
+    
+    cout<<"Moment Calc Eigenvalue Matrix"<<endl;
+    cout<<"| "<<eval.at<double>(1,0)<<" "<<0<<"|"<<endl;
+    cout<<"| "<<0<<" "<<eval.at<double>(0,0)<<"|"<<endl;
+    
+    cout<<"Eccentricity: "<<eccentricity(*blobLists[nBlob])<<endl;
+    covar->release();
+    
+    printf("Raw Moments: %0.2f  %0.2f %0.2f %0.2f %0.2f %0.2f %0.2f  %0.2f %0.2f %0.2f\n",Mij(*blobLists[nBlob],0,0), Mij(*blobLists[nBlob],1,0),  Mij(*blobLists[nBlob],0,1),  Mij(*blobLists[nBlob],2,0),  Mij(*blobLists[nBlob],1,1),  Mij(*blobLists[nBlob],0,2), Mij(*blobLists[nBlob],3,0),  Mij(*blobLists[nBlob],2,1), Mij(*blobLists[nBlob],1,2),  Mij(*blobLists[nBlob],0,3));
+    printf("Central Moments: %0.2f  %0.2f %0.2f %0.2f %0.2f %0.2f %0.2f\n",muij(*blobLists[nBlob],2,0), muij(*blobLists[nBlob],1,1), muij(*blobLists[nBlob],0,2),muij(*blobLists[nBlob],3,0), muij(*blobLists[nBlob],2,1), muij(*blobLists[nBlob],1,2), muij(*blobLists[nBlob],0,3));
+    
+    printf("Normalized Moments: %0.2f  %0.2f %0.2f %0.2f %0.2f %0.2f %0.2f\n",etaij(*blobLists[nBlob],2,0), etaij(*blobLists[nBlob],1,1), etaij(*blobLists[nBlob],0,2),etaij(*blobLists[nBlob],3,0), etaij(*blobLists[nBlob],2,1), etaij(*blobLists[nBlob],1,2), etaij(*blobLists[nBlob],0,3));
+}
 
 long split(const string &txt, vector<string> &strs, char ch)
 {

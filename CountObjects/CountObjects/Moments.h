@@ -16,6 +16,7 @@
 #define POW2(val) ((val) * (val))
 #define POW3(val) ((val) * (val) * (val))
 
+void blobStatistics(cv::vector<cv::vector<PIXEL>*>& blobLists, int nBlob);
 long split(const std::string &txt, cv::vector<std::string> &strs, char ch);
 struct huRef
 {

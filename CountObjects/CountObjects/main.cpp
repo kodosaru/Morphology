@@ -33,86 +33,10 @@ using namespace std;
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
+#include "main.h"
 
 using namespace cv;
 using namespace std;
-
-/// Global variables
-Mat src_gray;
-int thresh = 200;
-int max_thresh = 255;
-
-const char* source_window = "Source image";
-const char* corners_window = "Corners detected";
-
-/// Function header
-void cornerHarris_demo( int, void* );
-
-/**
- * @function main
- */
-int harris(Mat& src)
-{
-    /// Load source image and convert it to gray
-    //src = imread( argv[1], 1 );
-    //cvtColor( src, src_gray, COLOR_BGR2GRAY );
-    src.copyTo(src_gray);
-    
-    /// Create a window and a trackbar
-    //namedWindow( source_window, WINDOW_AUTOSIZE );
-    Size sz=src.size();
-    //createTrackbar( "Threshold: ", source_window, &thresh, max_thresh, cornerHarris_demo, &sz );
-    //imshow( source_window, src );
-    
-    cornerHarris_demo( 0, &sz );
-    
-    //waitKey(0);
-    return(0);
-}
-
-/**
- * @function cornerHarris_demo
- * @brief Executes the corner detection and draw a circle around the possible corners
- */
-void cornerHarris_demo( int, void* userData )
-{
-    Size sz = *((Point*)&userData);
-    cout << sz << endl;
-    
-    Mat dst, dst_norm, dst_norm_scaled;
-    dst = Mat::zeros( sz, CV_32FC1 );
-    
-    /// Detector parameters
-    int blockSize = 2;
-    int apertureSize = 3;
-    double k = 0.04;
-    
-    /// Detecting corners
-    cornerHarris( src_gray, dst, blockSize, apertureSize, k, BORDER_DEFAULT );
-    
-    /// Normalizing
-    normalize( dst, dst_norm, 0, 255, NORM_MINMAX, CV_32FC1, Mat() );
-    convertScaleAbs( dst_norm, dst_norm_scaled );
-    
-    /// Drawing a circle around corners
-    for( int j = 0; j < dst_norm.rows ; j++ )
-    { for( int i = 0; i < dst_norm.cols; i++ )
-    {
-        if( (int) dst_norm.at<float>(j,i) > thresh )
-        {
-            circle( dst_norm_scaled, Point( i, j ), 5,  Scalar(0), 2, 8, 0 );
-        }
-    }
-    }
-    /// Showing the result
-    namedWindow( corners_window, WINDOW_AUTOSIZE );
-    imshow( corners_window, dst_norm_scaled );
-}
-
-
-
-
-
 
 int main(int argc, const char * argv[])
 {
@@ -191,7 +115,6 @@ int main(int argc, const char * argv[])
     // Put blobs in their own images
     vector<Mat> blobImages;
     PIXEL blobPix;
-    stringstream ss;
     destroyAllWindows();
     for(int i=0;i<nBlobs;i++)
     {
@@ -204,48 +127,25 @@ int main(int argc, const char * argv[])
             if( blobPix.val[0])
                 blobImages[i].at<uchar>(blobPix.pt)=255;
         }
+        stringstream ss;
         ss << i;
         string sVal = ss.str();
-        //namedWindow("Blob"+sVal,WINDOW_NORMAL);
-        //imshow("Blob"+sVal,blobImages[i]);
-        //harris(blobImages[i]);
+        string winName = "Blob["+sVal+"]";
+        namedWindow(winName,WINDOW_NORMAL);
+        imshow("Blob"+sVal,blobImages[i]);
         
-        Mat dst, dst_norm, dst_norm_scaled;
-        dst = Mat::zeros(regions.size(), CV_32FC1 );
+        Mat src_gray;
+        RNG rng(12345);
+        int thresh=100;
+        int max_thresh = 255;
         
-        /// Detector parameters
-        int blockSize = 8;
-        int apertureSize = 3;
-        double k = 0.04;
+        /// Calculate contours
+        winName = "Blob["+sVal+"] Contour";
+        calculateContours(blobImages[i], rng, thresh, max_thresh, winName);
         
-        /// Detecting corners
-        cornerHarris(blobImages[i] , dst, blockSize, apertureSize, k, BORDER_DEFAULT );
-        
-        /// Normalizing
-        normalize( dst, dst_norm, 0, 255, NORM_MINMAX, CV_32FC1, Mat() );
-        convertScaleAbs( dst_norm, dst_norm_scaled );
-        
-        /// Drawing a circle around corners
-        int corners=0;
-        for( int j = 0; j < dst_norm.rows ; j++ )
-        { for( int k = 0; k < dst_norm.cols; k++ )
-        {
-            if( (int) dst_norm.at<float>(j,k) > thresh )
-            {
-                circle( dst_norm_scaled, Point( k, j ), 5,  Scalar(0), 2, 8, 0 );
-                ++corners;
-            }
-        }
-        }
-        cout<<"Blob["<<i<<"] has "<<++corners<<" corners"<<endl;
-        /// Showing the result
-        namedWindow( corners_window, WINDOW_AUTOSIZE );
-        imshow( corners_window, dst_norm_scaled );
-
-        waitKey();
+        //if(WAIT_WIN)
+            waitKey();
     }
-    if(WAIT_WIN)
-        waitKey();
     destroyAllWindows();
 
     // Read in region file
@@ -308,34 +208,9 @@ int main(int argc, const char * argv[])
     {
         if(blobLists[i]!=nullptr)
         {
-            /*
-             Mat *covar = covarianceMatrix(*blobLists[i]);
-             cout<<"Covariance Matrix"<<endl;
-             cout<<"| "<<covar->at<double>(0,0)<<" "<<covar->at<double>(0,1)<<"|"<<endl;
-             cout<<"| "<<covar->at<double>(1,0)<<" "<<covar->at<double>(1,1)<<"|"<<endl;
-             Mat eval, evec;
-             eigen((*covar),eval,evec);
-             // Printing out column order and taking negative of eigenvectors like MATLAB
-             evec = -1.0 * evec;
-             cout<<"Eigenvector Matrix"<<endl;
-             cout<<"| "<<evec.at<double>(1,0)<<" "<<evec.at<double>(0,0)<<"|"<<endl;
-             cout<<"| "<<evec.at<double>(1,1)<<" "<<evec.at<double>(0,1)<<"|"<<endl;
-             cout<<"OpenCV Calc Eigenvalue Matrix"<<endl;
-             cout<<"| "<<eval.at<double>(1,0)<<" "<<0<<"|"<<endl;
-             cout<<"| "<<0<<" "<<eval.at<double>(0,0)<<"|"<<endl;
-             evec = *eigenvalueMatrix(*blobLists[i]);
-             cout<<"Moment Calc Eigenvalue Matrix"<<endl;
-             cout<<"| "<<eval.at<double>(1,0)<<" "<<0<<"|"<<endl;
-             cout<<"| "<<0<<" "<<eval.at<double>(0,0)<<"|"<<endl;
-             cout<<"Eccentricity: "<<eccentricity(*blobLists[i])<<endl;
-             covar->release();
-             eigenvalueMatrix->release();
+            if(FULL_STAT)
+                blobStatistics(blobLists,i);
 
-             printf("Raw Moments: %0.2f  %0.2f %0.2f %0.2f %0.2f %0.2f %0.2f  %0.2f %0.2f %0.2f\n",Mij(*blobLists[i],0,0), Mij(*blobLists[i],1,0),  Mij(*blobLists[i],0,1),  Mij(*blobLists[i],2,0),  Mij(*blobLists[i],1,1),  Mij(*blobLists[i],0,2), Mij(*blobLists[i],3,0),  Mij(*blobLists[i],2,1), Mij(*blobLists[i],1,2),  Mij(*blobLists[i],0,3));
-             printf("Central Moments: %0.2f  %0.2f %0.2f %0.2f %0.2f %0.2f %0.2f\n",muij(*blobLists[i],2,0), muij(*blobLists[i],1,1), muij(*blobLists[i],0,2),muij(*blobLists[i],3,0), muij(*blobLists[i],2,1), muij(*blobLists[i],1,2), muij(*blobLists[i],0,3));
-             
-             printf("Normalized Moments: %0.2f  %0.2f %0.2f %0.2f %0.2f %0.2f %0.2f\n",etaij(*blobLists[i],2,0), etaij(*blobLists[i],1,1), etaij(*blobLists[i],0,2),etaij(*blobLists[i],3,0), etaij(*blobLists[i],2,1), etaij(*blobLists[i],1,2), etaij(*blobLists[i],0,3));
-             */
             
             // Hu moments
             cout<<endl;

@@ -79,6 +79,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		7205A4A419112A7300AE55D9 /* main.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
 		723CDFD2191068ED00DE2A8A /* Settings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Settings.h; sourceTree = "<group>"; };
 		723CDFD3191081CA00DE2A8A /* Harris.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Harris.cpp; sourceTree = "<group>"; };
 		723CDFD4191081CA00DE2A8A /* Harris.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Harris.h; sourceTree = "<group>"; };
@@ -269,6 +270,7 @@
 				72951E98190C5DE600618A74 /* FloodFillMethods.cpp */,
 				72951E99190C5DE600618A74 /* FloodFillMethods.h */,
 				72951E9A190C5DE600618A74 /* main.cpp */,
+				7205A4A419112A7300AE55D9 /* main.h */,
 				723CDFD2191068ED00DE2A8A /* Settings.h */,
 				72951E9B190C5DE600618A74 /* Stack.cpp */,
 				72951E9C190C5DE600618A74 /* Stack.hpp */,
