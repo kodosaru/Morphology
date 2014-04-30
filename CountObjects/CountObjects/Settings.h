@@ -12,6 +12,7 @@
 #define FILLED -1
 #define NUM_HU 8
 #define WAIT_WIN 0
+#define SHOW_WIN 1
 #define FULL_STAT 0
 
 extern cv::Mat src_gray;

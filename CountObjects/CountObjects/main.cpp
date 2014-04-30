@@ -141,7 +141,7 @@ int main(int argc, const char * argv[])
         
         /// Calculate contours
         winName = "Blob["+sVal+"] Contour";
-        calculateContours(blobImages[i], rng, thresh, max_thresh, winName);
+        calculateContours(blobImages[i], rng, thresh, max_thresh, i, winName);
         
         //if(WAIT_WIN)
             waitKey();

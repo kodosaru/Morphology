@@ -229,7 +229,7 @@ unsigned long listFiles(string targetPath, vector<string>& fileNames)
     return file_count;
 }
 
-void calculateContours(Mat src_gray, RNG rng, int thresh, int max_thresh, string winName)
+void calculateContours(Mat src_gray, RNG rng, int thresh, int max_thresh, int nBlob, string winName)
 {
     Mat canny_output;
     vector<vector<Point> > contours;
@@ -243,13 +243,32 @@ void calculateContours(Mat src_gray, RNG rng, int thresh, int max_thresh, string
     /// Find contours
     findContours( canny_output, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0) );
     
-    /// Draw contours
-    Mat drawing = Mat::zeros( canny_output.size(), CV_8UC3 );
+    /// Find max contour
+    double area=0;
+    int maxBlob = -1;
+    double maxArea = -DBL_MAX;
     for( int i = 0; i< contours.size(); i++ )
     {
-        Scalar color = Scalar( rng.uniform(0, 255), rng.uniform(0,255), rng.uniform(0,255) );
-        drawContours( drawing, contours, i, color, 2, 8, hierarchy, 0, Point() );
+        area = contourArea(contours[i],false);
+        if(area>maxArea)
+        {
+            maxBlob=i;
+            maxArea=area;
+        }
     }
+    area=maxArea;
+
+    /// Analyze contour
+    string sbConvex;
+    double length = arcLength(contours[maxBlob],true);
+    bool bConvex = isContourConvex(contours[maxBlob]);
+    sbConvex = bConvex ? "true" : "false";
+    printf("Blob[%d] area: %0.0f arc length: %0.0f convex: %s\n",nBlob,area,length,sbConvex.c_str());
+
+    /// Draw contours
+    Mat drawing = Mat::zeros( canny_output.size(), CV_8UC3 );
+    Scalar color = Scalar( rng.uniform(0, 255), rng.uniform(0,255), rng.uniform(0,255) );
+    drawContours( drawing, contours, maxBlob, color, 2, 8, hierarchy, 0, Point() );
     
     /// Show in a window
     namedWindow(winName, WINDOW_NORMAL);
