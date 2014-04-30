@@ -131,7 +131,12 @@ void extractblobs(Mat& regions, int clusterCount, unsigned short& nRegion, vecto
     char cn[256];
     sprintf(cn,"%s%s%s%d%s",outputDataDir.c_str(),outputFileName.c_str(),"Regions",clusterCount,".png");
     imwrite(cn,tempRegions);
-    imshow("Extraction",tempRegions);
+    if(SHOW_WIN)
+    {
+        string winName="Extraction";
+        namedWindow(winName,WINDOW_NORMAL);
+        imshow(winName,tempRegions);
+    }
     if(WAIT_WIN)
         waitKey();
 }
@@ -145,8 +150,12 @@ int readInImage(Mat& image, string inputDataDir, string fullInputfileName, strin
         return 1;
     }
     resize(input,input,Size(input.cols * resizeFactor, input.rows * resizeFactor),0,0,INTER_LINEAR);
-    namedWindow("Input");
-    imshow("Input", input);
+    if(SHOW_WIN)
+    {
+        string winName="Input";
+        namedWindow(winName,WINDOW_NORMAL);
+        imshow(winName, input);
+    }
     if(WAIT_WIN)
         waitKey();
     
@@ -154,8 +163,12 @@ int readInImage(Mat& image, string inputDataDir, string fullInputfileName, strin
     cvtColor(input,ycrcb,CV_BGR2YCrCb);
     imwrite(outputDataDir + outputFileName + ".png",ycrcb);
     
-    namedWindow("YCrCb");
-    imshow("YCrCb", ycrcb);
+    if(SHOW_WIN)
+    {
+        string winName="YCrCb";
+        namedWindow(winName);
+        imshow(winName, ycrcb);
+    }
     if(WAIT_WIN)
         waitKey();
     
@@ -229,7 +242,7 @@ unsigned long listFiles(string targetPath, vector<string>& fileNames)
     return file_count;
 }
 
-void calculateContours(Mat src_gray, RNG rng, int thresh, int max_thresh, int nBlob, string winName)
+void calculateContours(Mat src_gray, RNG rng, int thresh, int max_thresh, int nBlob)
 {
     Mat canny_output;
     vector<vector<Point> > contours;
@@ -270,9 +283,19 @@ void calculateContours(Mat src_gray, RNG rng, int thresh, int max_thresh, int nB
     Scalar color = Scalar( rng.uniform(0, 255), rng.uniform(0,255), rng.uniform(0,255) );
     drawContours( drawing, contours, maxBlob, color, 2, 8, hierarchy, 0, Point() );
     
-    /// Show in a window
-    namedWindow(winName, WINDOW_NORMAL);
-    imshow(winName, drawing );
+    /// Show in a win
+    if(SHOW_WIN)
+    {
+        stringstream ss;
+        ss << nBlob;
+        string sVal = ss.str();
+        string winName = "Blob["+sVal+"] Contour";
+        namedWindow(winName, WINDOW_NORMAL);
+        imshow(winName, drawing );
+    }
+    if (WAIT_WIN) {
+        waitKey();
+    }
 }
 
 

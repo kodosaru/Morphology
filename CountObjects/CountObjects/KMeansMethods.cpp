@@ -110,7 +110,12 @@ int  classifyUsingSavedCenters(bool bSaveState, std::string dataDir, std::string
     char cn[256];
     sprintf(cn,"%s%s%s%d%s",dataDir.c_str(),fileName.c_str(),"Clusters",clusterCount,".png");
     imwrite(cn,pMouseInfo->graph);
-    imshow("Clusters",pMouseInfo->graph);
+    if(SHOW_WIN)
+    {
+        string winName="Clusters";
+        namedWindow(winName,WINDOW_NORMAL);
+        imshow(winName,pMouseInfo->graph);
+    }
     if(WAIT_WIN)
         waitKey();
     
@@ -133,7 +138,12 @@ int  classifyUsingSavedCenters(bool bSaveState, std::string dataDir, std::string
     
     // Show final result after background removed
     imwrite(cn,pMouseInfo->graph);
-    imshow("Desired Clusters", pMouseInfo->graph);
+    if(SHOW_WIN)
+    {
+        string winName="Desired Clusters";
+        namedWindow(winName,WINDOW_NORMAL);
+        imshow(winName, pMouseInfo->graph);
+    }
     if(WAIT_WIN)
         waitKey();
     
@@ -141,7 +151,12 @@ int  classifyUsingSavedCenters(bool bSaveState, std::string dataDir, std::string
     Mat grayScale,mask;
     mask.create(image.rows,image.cols,CV_8UC1);
     cvtColor(pMouseInfo->graph, mask, CV_BGR2GRAY);
-    imshow("Gray Scale",mask);
+    if(SHOW_WIN)
+    {
+        string winName="Grayscale";
+        namedWindow(winName,WINDOW_NORMAL);
+        imshow(winName,mask);
+    }
     if(WAIT_WIN)
         waitKey();
     
@@ -152,13 +167,23 @@ int  classifyUsingSavedCenters(bool bSaveState, std::string dataDir, std::string
                                         Size( 2*dilationSize + 1, 2*dilationSize+1 ),
                                         Point( dilationSize, dilationSize ) );
     dilate(mask,mask,dilateElement);
-    imshow("Opening",mask);
+    if(SHOW_WIN)
+    {
+        string winName="Opening";
+        namedWindow(winName,WINDOW_NORMAL);
+        imshow(winName,mask);
+    }
     if(WAIT_WIN)
         waitKey();
     
     // Do binary threshold
     threshold(mask, mask, 0, 255, THRESH_BINARY);
-    imshow("Binary", mask);
+    if(SHOW_WIN)
+    {
+        string winName="Binary";
+        namedWindow(winName,WINDOW_NORMAL);
+        imshow(winName, mask);
+    }
     if(WAIT_WIN)
         waitKey();
     
@@ -204,7 +229,12 @@ int kMeansCustom(bool bSaveState, std::string dataDir, std::string fileName, int
     char cn[256];
     sprintf(cn,"%s%s%s%d%s",dataDir.c_str(),fileName.c_str(),"Clusters",clusterCount,".png");
     imwrite(cn,pMouseInfo->graph);
-    imshow("Clusters",pMouseInfo->graph);
+    if(SHOW_WIN)
+    {
+        string winName="Clusters";
+        namedWindow(winName,WINDOW_NORMAL);
+        imshow(winName,pMouseInfo->graph);
+    }
     if(WAIT_WIN)
         waitKey();
     
@@ -247,14 +277,24 @@ int kMeansCustom(bool bSaveState, std::string dataDir, std::string fileName, int
     printf("K-means info  cluster count: %d sample count: %lu points size: (%d,%d) labels size: (%d,%d) centers size: (%d,%d)\n", clusterCount, sampleCount, points.rows, points.cols, pMouseInfo->labels.rows, pMouseInfo->labels.cols, centers.rows, centers.cols);
     sprintf(cn,"%s%s%s%d%s",dataDir.c_str(),fileName.c_str(),"ClustersNoBkgd",clusterCount,".png");
     imwrite(cn,pMouseInfo->graph);
-    imshow("Desired Clusters", pMouseInfo->graph);
+    if(SHOW_WIN)
+    {
+        string winName="Desired Clusters";
+        namedWindow(winName,WINDOW_NORMAL);
+        imshow(winName, pMouseInfo->graph);
+    }
     if(WAIT_WIN)
         waitKey();
     
     // Convert to grayscale
     mask.create(image.rows,image.cols,CV_8UC1);
     cvtColor(pMouseInfo->graph, mask, CV_BGR2GRAY);
-    imshow("Gray Scale",mask);
+    if(SHOW_WIN)
+    {
+        string winName="Grayscale";
+        namedWindow(winName,WINDOW_NORMAL);
+        imshow(winName,mask);
+    }
     if(WAIT_WIN)
         waitKey();
     
@@ -265,13 +305,23 @@ int kMeansCustom(bool bSaveState, std::string dataDir, std::string fileName, int
                                               Size( 2*dilationSize + 1, 2*dilationSize+1 ),
                                               Point( dilationSize, dilationSize ) );
     dilate(mask,mask,dilateElement);
-    imshow("Gray Scale",mask);
+    if(SHOW_WIN)
+    {
+        string winName="Opening";
+        namedWindow(winName,WINDOW_NORMAL);
+        imshow(winName,mask);
+    }
     if(WAIT_WIN)
         waitKey();
     
     // Do binary threshold
     threshold(mask, mask, 0, 255, THRESH_BINARY);
-    imshow("Binary", mask);
+    if(SHOW_WIN)
+    {
+        string winName="Binary";
+        namedWindow(winName,WINDOW_NORMAL);
+        imshow(winName, mask);
+    }
     if(WAIT_WIN)
         waitKey();
     
@@ -316,9 +366,8 @@ static void onMouse( int event, int x, int y, int /*flags*/, void* ptr )
         }
         for(int i;i<pMouseInfo->points.size();i++)
             circle(pMouseInfo->graph, pMouseInfo->points[i], 5, CV_RGB(255,0,0), -1);
-        imshow("Clusters", pMouseInfo->graph);
-        if(WAIT_WIN)
-            waitKey();
+        string winName="Clusters";
+        imshow(winName, pMouseInfo->graph);
     }
 }
 

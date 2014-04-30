@@ -115,7 +115,6 @@ int main(int argc, const char * argv[])
     // Put blobs in their own images
     vector<Mat> blobImages;
     PIXEL blobPix;
-    destroyAllWindows();
     for(int i=0;i<nBlobs;i++)
     {
         blobImages.push_back(Mat(regions.rows,regions.cols,CV_8U));
@@ -127,12 +126,17 @@ int main(int argc, const char * argv[])
             if( blobPix.val[0])
                 blobImages[i].at<uchar>(blobPix.pt)=255;
         }
-        stringstream ss;
-        ss << i;
-        string sVal = ss.str();
-        string winName = "Blob["+sVal+"]";
-        namedWindow(winName,WINDOW_NORMAL);
-        imshow("Blob"+sVal,blobImages[i]);
+        if(SHOW_WIN)
+        {
+            stringstream ss;
+            ss << i;
+            string sVal = ss.str();
+            string winName = "Blob["+sVal+"]";
+            namedWindow(winName,WINDOW_NORMAL);
+            imshow(winName,blobImages[i]);
+        }
+        if(WAIT_WIN)
+            waitKey();
         
         Mat src_gray;
         RNG rng(12345);
@@ -140,13 +144,8 @@ int main(int argc, const char * argv[])
         int max_thresh = 255;
         
         /// Calculate contours
-        winName = "Blob["+sVal+"] Contour";
-        calculateContours(blobImages[i], rng, thresh, max_thresh, i, winName);
-        
-        //if(WAIT_WIN)
-            waitKey();
+        calculateContours(blobImages[i], rng, thresh, max_thresh, i);
     }
-    destroyAllWindows();
 
     // Read in region file
     sprintf(cn,"%s%s%s%d%s",outputDataDir.c_str(),outputFileName.c_str(),"Regions",clusterCount,".png");
@@ -198,8 +197,12 @@ int main(int argc, const char * argv[])
     }
     sprintf(cn,"%s%s%s%d%s",outputDataDir.c_str(),outputFileName.c_str(),"Blobs",clusterCount,".png");
     imwrite(cn,tempRegions);
-    namedWindow("Moments, Centroid and Major Axis",WINDOW_NORMAL);
-    imshow("Moments, Centroid and Major Axis",tempRegions);
+    if(SHOW_WIN)
+    {
+        string winName="Moments, Centroid and Major Axis";
+        namedWindow(winName,WINDOW_NORMAL);
+        imshow(winName,tempRegions);
+    }
     if(WAIT_WIN)
         waitKey();
     

@@ -15,13 +15,4 @@
 #define SHOW_WIN 1
 #define FULL_STAT 0
 
-extern cv::Mat src_gray;
-extern int thresh;
-extern int max_thresh;
-extern cv::RNG rng;
-
-/// Function header
-void thresh_callback(int, void* );
-
-
 #endif

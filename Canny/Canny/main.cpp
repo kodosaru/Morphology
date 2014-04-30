@@ -110,7 +110,7 @@ void CannyThreshold(int, void*)
     dst = Scalar::all(0);
     
     src.copyTo( dst, detected_edges);
-    imshow( window_name, dst );
+    imshow( window_name, dst, WINDOW_NORMAL );
 }
 
 void CannyThreshold2(int, void*)

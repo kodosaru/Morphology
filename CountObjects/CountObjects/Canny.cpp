@@ -11,6 +11,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "CannyMethods.h"
+#include "Settings.h"
 
 using namespace cv;
 using namespace std;
@@ -74,5 +75,10 @@ int Canny(int argc, const char * argv[])
 void callbackCanny(int, void*)
 {
     CannyThreshold(srcOriginalGray, dstCanny, lowThreshold, lowThreshold*threshholdRatio, 3);
-    imshow(cannyWindow,dstCanny);
+    if(SHOW_WIN)
+    {
+        string winName="Canny";
+        namedWindow(winName,WINDOW_NORMAL);
+        imshow(winName,dstCanny);
+    }
 }

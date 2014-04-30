@@ -171,7 +171,12 @@ void adjustContrastBrightness(Mat& image, Mat& new_image, int beta, double alpha
 
 void testStack(Mat& binary, string dataDir)
 {
-    imshow("binary",binary);
+    if(SHOW_WIN)
+    {
+        string winName="Binary";
+        namedWindow(winName);
+        imshow(winName,binary);
+    }
     if(WAIT_WIN)
         waitKey();
     
@@ -203,7 +208,12 @@ void testStack(Mat& binary, string dataDir)
     }
     std::cout<<"End of pushing and popping all pixels in binary image onto stack"<<endl;
     imwrite(dataDir+"outtest.png",test);
-    imshow("test",test);
+    if(SHOW_WIN)
+    {
+        string winName="Test";
+        namedWindow(winName,WINDOW_NORMAL);
+        imshow(winName,test);
+    }
     if(WAIT_WIN)
         waitKey();
 }
