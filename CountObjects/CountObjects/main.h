@@ -9,4 +9,10 @@
 #ifndef CountObjects_main_h
 #define CountObjects_main_h
 
+#include <iostream>
+#include <fstream>
+#include <string>
+
+extern std::ofstream logfile;
+
 #endif

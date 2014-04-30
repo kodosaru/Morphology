@@ -13,6 +13,11 @@
 #define NUM_HU 8
 #define WAIT_WIN 0
 #define SHOW_WIN 1
+#define SHOW_BLOBS 0
+#define SHOW_CONTOURS 0
+#define IMAGE_SCALE 0.25
 #define FULL_STAT 0
+#define MIN_REGION 1000
+#define MAX_REGION 100000
 
 #endif

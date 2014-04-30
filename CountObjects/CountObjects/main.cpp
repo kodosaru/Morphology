@@ -14,29 +14,13 @@
 #include "Moments.h"
 #include "Settings.h"
 #include <sstream>
-
-using namespace cv;
-using namespace std;
-
-
-
 #include "Harris.h"
-
-/**
- * @function cornerHarris_Demo.cpp
- * @brief Demo code for detecting corners using Harris-Stephens method
- * @author OpenCV team
- */
-
-#include "opencv2/highgui/highgui.hpp"
-#include "opencv2/imgproc/imgproc.hpp"
-#include <iostream>
-#include <stdio.h>
-#include <stdlib.h>
 #include "main.h"
 
 using namespace cv;
 using namespace std;
+
+ofstream logfile;
 
 int main(int argc, const char * argv[])
 {
@@ -46,13 +30,20 @@ int main(int argc, const char * argv[])
     // 2 output file name without extension used to save intermiediate products
     // 3 boolen whether to save k-means state: background classes and class palette
     // 4 maximum number k-means classes to allow
+    if(argc!=5)
+    {
+        cout<<"Incorrect number of program arguments"<<endl;
+        return 1;
+    }
     
     string inputDataDir="/Users/donj/workspace/Morphology/Data/Input/";
     string outputDataDir="/Users/donj/workspace/Morphology/Data/Output/";
     
-    if(argc!=5)
+    // Open log file
+    ofstream logfile (outputDataDir+"log.txt");
+    if (!logfile.is_open())
     {
-        cout<<"Incorrect number of program arguments"<<endl;
+        cout << "Unable to open log file "+outputDataDir+"log.txt";
         return 1;
     }
     
@@ -60,7 +51,7 @@ int main(int argc, const char * argv[])
     string inputFullFileName=argv[1];
     string outputFileName=argv[2];
     Mat input;
-    if(readInImage(input, inputDataDir, inputFullFileName, outputDataDir, outputFileName, 1.0/3.0))
+    if(readInImage(input, inputDataDir, inputFullFileName, outputDataDir, outputFileName, IMAGE_SCALE))
     {
         cout<<"Unable to read input file "<<inputDataDir+inputFullFileName<<endl;
         return 1;        
@@ -115,18 +106,19 @@ int main(int argc, const char * argv[])
     // Put blobs in their own images
     vector<Mat> blobImages;
     PIXEL blobPix;
+    vector<double> blobArcLength;
     for(int i=0;i<nBlobs;i++)
     {
         blobImages.push_back(Mat(regions.rows,regions.cols,CV_8U));
         blobImages[i]=Scalar(0,0,0,0);
-        cout<<"size of blob "<<i<<" is "<<blobLists[i]->size()<<endl;
+        cout<<"No. of pixels in blob "<<i<<" is "<<blobLists[i]->size()<<endl;
         for(int j=0;j<blobLists[i]->size();j++)
         {
             blobPix=(*blobLists[i])[j];
             if( blobPix.val[0])
                 blobImages[i].at<uchar>(blobPix.pt)=255;
         }
-        if(SHOW_WIN)
+        if(SHOW_WIN && SHOW_BLOBS)
         {
             stringstream ss;
             ss << i;
@@ -144,7 +136,7 @@ int main(int argc, const char * argv[])
         int max_thresh = 255;
         
         /// Calculate contours
-        calculateContours(blobImages[i], rng, thresh, max_thresh, i);
+        blobArcLength.push_back(calculateContours(blobImages[i], rng, thresh, max_thresh, i));
     }
 
     // Read in region file
@@ -214,7 +206,6 @@ int main(int argc, const char * argv[])
             if(FULL_STAT)
                 blobStatistics(blobLists,i);
 
-            
             // Hu moments
             cout<<endl;
             vector<vector<double>> huMoments(nBlobs);
@@ -222,10 +213,26 @@ int main(int argc, const char * argv[])
             {
                 huMoments[i].push_back(Hui(*blobLists[i],j));
             }
-            cout<<"Hu Invarients:";
+
+            cout<<"Hu Invarients, area and perimeter for blob["<<i<<"]:";
+            logfile<<i;
+            char sbuf[256];
+            char lsbuf[256];
             for(int j=0;j<NUM_HU;j++)
-                printf(" %0.6f",huMoments[i][j]);
-            cout<<endl;
+            {
+                sprintf(sbuf," %0.6f",huMoments[i][j]);
+                string s(sbuf);
+                cout<<s;
+                sprintf(lsbuf,"\t%12.6f",huMoments[i][j]);
+                string ls(lsbuf);
+                logfile<<ls;
+            }
+            sprintf(sbuf," %ld %0.0lf\n",blobLists[i]->size(),blobArcLength[i]);
+            string s(sbuf);
+            cout<<s;
+            sprintf(lsbuf,"\t%12ld\t%12.0lf\n",blobLists[i]->size(),blobArcLength[i]);
+            string ls(lsbuf);
+            logfile<<ls;
             
             // Classify blobs based on Hu invariants
             classifyObject(references, i, huMoments[i]);
@@ -240,8 +247,7 @@ int main(int argc, const char * argv[])
 
 
     destroyRegionBlobLists(regionLists, blobLists);
-
-    waitKey();
+    logfile.close();
     
     return 0;
 }

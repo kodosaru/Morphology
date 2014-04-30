@@ -388,6 +388,7 @@ double muij(vector<PIXEL> v, long i, long j)
 // Hu Translation, scale, and rotation invarient moments (+I8 recommended by Flusser & Suk)
 double Hui(vector<PIXEL> v, long i)
 {
+    // Calculate normalized moments upfront so that we are not doing extra work
     double n02 = etaij(v, 0, 2);
     double n03 = etaij(v, 0, 3);
     double n11 = etaij(v, 1, 1);
@@ -396,6 +397,7 @@ double Hui(vector<PIXEL> v, long i)
     double n21 = etaij(v, 2, 1);
     double n30 = etaij(v, 3, 0);
     
+    // Make the formuli below a little simpler with these partial solutions
     double ap = n20 + n02;
     double am = n20 - n02;
     double bp = n30 + n12;

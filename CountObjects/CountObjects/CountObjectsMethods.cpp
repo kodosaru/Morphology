@@ -27,9 +27,6 @@
 #include "FloodFillMethods.h"
 #include "Settings.h"
 
-#define BLOB_MIN_PIX 1000
-#define BLOB_MAX_PIX 50000
-
 using namespace cv;
 using namespace std;
 namespace fs = boost::filesystem;
@@ -78,7 +75,7 @@ void extractblobs(Mat& regions, int clusterCount, unsigned short& nRegion, vecto
     
     for(int i=0;i<nRegion;i++)
     {
-        if(regionLists[i]->size()<BLOB_MIN_PIX || regionLists[i]->size()>BLOB_MAX_PIX)
+        if(regionLists[i]->size() < MIN_REGION || regionLists[i]->size() > MAX_REGION)
         {
             for(int j=0;j<regionLists[i]->size();j++)
             {
@@ -242,7 +239,7 @@ unsigned long listFiles(string targetPath, vector<string>& fileNames)
     return file_count;
 }
 
-void calculateContours(Mat src_gray, RNG rng, int thresh, int max_thresh, int nBlob)
+double calculateContours(Mat src_gray, RNG rng, int thresh, int max_thresh, int nBlob)
 {
     Mat canny_output;
     vector<vector<Point> > contours;
@@ -260,7 +257,8 @@ void calculateContours(Mat src_gray, RNG rng, int thresh, int max_thresh, int nB
     double area=0;
     int maxBlob = -1;
     double maxArea = -DBL_MAX;
-    for( int i = 0; i< contours.size(); i++ )
+    int size = contours.size();
+    for( int i = 0; i<size; i++ )
     {
         area = contourArea(contours[i],false);
         if(area>maxArea)
@@ -269,14 +267,13 @@ void calculateContours(Mat src_gray, RNG rng, int thresh, int max_thresh, int nB
             maxArea=area;
         }
     }
-    area=maxArea;
 
     /// Analyze contour
     string sbConvex;
     double length = arcLength(contours[maxBlob],true);
     bool bConvex = isContourConvex(contours[maxBlob]);
     sbConvex = bConvex ? "true" : "false";
-    printf("Blob[%d] area: %0.0f arc length: %0.0f convex: %s\n",nBlob,area,length,sbConvex.c_str());
+    printf("Blob[%d] area: %0.0f arc length: %0.0f convex: %s\n",nBlob,maxArea,length,sbConvex.c_str());
 
     /// Draw contours
     Mat drawing = Mat::zeros( canny_output.size(), CV_8UC3 );
@@ -284,7 +281,7 @@ void calculateContours(Mat src_gray, RNG rng, int thresh, int max_thresh, int nB
     drawContours( drawing, contours, maxBlob, color, 2, 8, hierarchy, 0, Point() );
     
     /// Show in a win
-    if(SHOW_WIN)
+    if(SHOW_WIN && SHOW_CONTOURS)
     {
         stringstream ss;
         ss << nBlob;
@@ -296,6 +293,7 @@ void calculateContours(Mat src_gray, RNG rng, int thresh, int max_thresh, int nB
     if (WAIT_WIN) {
         waitKey();
     }
+    return length;
 }
 
 
