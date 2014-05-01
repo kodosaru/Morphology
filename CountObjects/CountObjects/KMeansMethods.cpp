@@ -15,6 +15,7 @@
 #include "boost/progress.hpp"
 #include "Moments.h"
 #include "Settings.h"
+#include "CountObjectsMethods.h"
 
 using namespace cv;
 using namespace std;
@@ -48,7 +49,14 @@ int  classifyUsingSavedCenters(bool bSaveState, std::string dataDir, std::string
     Mat centers;
     ostringstream ss;
     ss<<clusterCount;
-    loadMat(centers, dataDir+"centers."+ss.str()+".bin");
+    string sfn = dataDir+"centers."+ss.str()+".bin";
+    cout<<"Centers file "<<fileName<<endl;
+    if(!is_file_exist(sfn))
+    {
+        cout<<"File "<<sfn<<" does not exist"<<endl;
+        return 1;
+    }
+    loadMat(centers, sfn);
     if(centers.empty())
     {
         cout<<"Unable to load '"<<dataDir<<"centers"<<ss.str()<<".bin' in kMeansExperimental()"<<endl;

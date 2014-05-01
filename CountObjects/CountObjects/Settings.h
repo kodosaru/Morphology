@@ -10,14 +10,22 @@
 #define CountObjects_Settings_h
 
 #define FILLED -1
-#define NUM_HU 8
+#define NUM_HU_INVARIANTS 8
+#define NUM_DESCRIPTORS 3
 #define WAIT_WIN 0
-#define SHOW_WIN 1
+#define SHOW_WIN 0
+#define SHOW_MAIN_WIN 1
 #define SHOW_BLOBS 0
 #define SHOW_CONTOURS 0
 #define IMAGE_SCALE 0.25
 #define FULL_STAT 0
 #define MIN_REGION 1000
 #define MAX_REGION 100000
+#define CLASSIFIER_TOLERANCE 0.5
+#define COMPACTNESS_BOUNDARY 12.35
+#define FORK 0
+#define SPOON 1
+#define KNIFE 2
+#define BLOB 3
 
 #endif

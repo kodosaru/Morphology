@@ -15,6 +15,7 @@
 #include "Settings.h"
 #include <fstream>
 #include <algorithm>
+#include <iomanip>
 
 using namespace cv;
 using namespace std;
@@ -120,39 +121,78 @@ void readInReferences(vector<HUREF>& references, string filePath)
 	}
 }
 
-int classifyObject(vector<HUREF> references, int nObject, vector<double> object)
+int classifyObject(vector<HUREF> references, int nObject, vector<double> object, vector<int>& inventory)
 {
     // Actually using square of distance to avoid taking square root
-    float tolerance = 1.0;
     
+    // The reference vector is two elements bigger than the object vector because it include area and perimeter length
     if(references[0].val.size() != object.size())
     {
-        cout<<"Unable to compute Euclidean distance in classifyObject() - vectors are of a different length";
+        cout<<"Unable to compute Euclidean distance in classifyObject() - reference and object vectors are of a different length"<<endl;;
         return -INT_MAX;
     }
     
     double minDist=DBL_MAX, tempDist;
     int referenceNdx = -INT_MAX;
+    if(references[0].val.size() != (NUM_HU_INVARIANTS + 2))
+    {
+        cout<<"The number of statistics being compared is greater than the references provided"<<endl;
+        return referenceNdx;
+    }
     // Loop through all of the reference Hu variant vectors
-    for(int j=0;j<references.size();j++)
+    for(int j=0;j<NUM_DESCRIPTORS;j++)
     {
         tempDist = 0.0;
         // For each reference object vector, loop through the elements
-        for(int k=0;k<references[j].val.size();k++)
+        for(int k=0;k<NUM_HU_INVARIANTS;k++)
         {
+            //printf("object[%d]: %0.2f references[%d].val[%d]: %0.2f\n",k,object[k],j,k,references[j].val[k]);
             tempDist += POW2(object[k] - references[j].val[k]);
         }
-        if(tempDist < tolerance && tempDist < minDist)
+        if(tempDist < CLASSIFIER_TOLERANCE && tempDist < minDist)
         {
             referenceNdx = j;
             minDist = tempDist;
         }
     }
+    double compactness = object[8]/object[9];
+    cout<<"Object's["<<nObject<<"] compactness is "<<compactness<<endl;
     
+    string finalClassification;
     if(referenceNdx != -INT_MAX)
-        cout<<"Object's["<<nObject<<"] descriptor is "<<minDist<<" away from and closest to "<<references[referenceNdx].objectDesc<<"["<<referenceNdx<<"]'s descriptor"<<endl;
+    {
+        // If preliminary classification based on Hu invariants is fork or knife, use compactness to make final decision
+        if(referenceNdx == FORK || referenceNdx == KNIFE)
+        {
+            if(compactness > COMPACTNESS_BOUNDARY)
+            {
+                finalClassification="Knife";
+                referenceNdx=KNIFE;
+                inventory[KNIFE]++;
+            }
+            else
+            {
+                finalClassification="Fork";
+                referenceNdx=FORK;
+                inventory[FORK]++;
+            }
+        }
+        // Object is a spoon
+        else
+        {
+            inventory[SPOON]++;
+            finalClassification=references[referenceNdx].objectDesc;
+        }
+    }
+    // Blob is the catch-all classification
     else
-        cout<<"Object's["<<nObject<<"] descriptor is does not match any descriptors"<<endl;
+    {
+        finalClassification="Blob";
+        referenceNdx=BLOB;
+        inventory[BLOB]++;
+    }
+    cout<<"Object's["<<nObject<<"] descriptor is Hu invariant distance "<<setprecision(2)<<minDist<<" away from and closest to "<<finalClassification<<"'s descriptor"<<endl;
+
     return referenceNdx;
 }
 

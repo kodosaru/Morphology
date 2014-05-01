@@ -19,5 +19,6 @@ void extractblobs(cv::Mat& regions, int clusterCount, unsigned short& nRegion, c
 int readInImage(cv::Mat& image, std::string inputDataDir, std::string fullInputfileName, std::string outputDataDir, std::string outputFileName, float resizeFactor);
 unsigned long listFiles(std::string targetPath, cv::vector<std::string>& fileNames);
 double calculateContours(cv::Mat src_gray, cv::RNG rng, int thresh, int max_thresh, int nBlob);
+bool is_file_exist(cv::string fileName);
 
 #endif /* defined(__CountObjects__CountObjectsMethods__) */

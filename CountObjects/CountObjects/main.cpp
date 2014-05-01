@@ -143,9 +143,9 @@ int main(int argc, const char * argv[])
     sprintf(cn,"%s%s%s%d%s",outputDataDir.c_str(),outputFileName.c_str(),"Regions",clusterCount,".png");
     Mat tempRegions=imread(cn,CV_8UC1);
     
-    // Read in Hu invariants reference vectors and classify blobs
+    // Read in Hu invariants reference vectors, area and perimeter length and classify blobs
     vector<HUREF> references;
-    readInReferences(references, outputDataDir+"references.txt");
+    readInReferences(references, inputDataDir+"references.txt");
     
     // Calculate centroids of blobs
     for(int i=0;i<nBlobs;i++)
@@ -189,16 +189,17 @@ int main(int argc, const char * argv[])
     }
     sprintf(cn,"%s%s%s%d%s",outputDataDir.c_str(),outputFileName.c_str(),"Blobs",clusterCount,".png");
     imwrite(cn,tempRegions);
-    if(SHOW_WIN)
+    if(SHOW_MAIN_WIN)
     {
         string winName="Moments, Centroid and Major Axis";
         namedWindow(winName,WINDOW_NORMAL);
         imshow(winName,tempRegions);
     }
-    if(WAIT_WIN)
-        waitKey();
     
     // Calculate remaining statistics
+    vector<int> inventory(NUM_DESCRIPTORS+1);
+    for(int i=0;i<NUM_DESCRIPTORS+1;i++)
+        inventory[i]=0;;
     for(int i=0;i<nBlobs;i++)
     {
         if(blobLists[i]!=nullptr)
@@ -209,16 +210,22 @@ int main(int argc, const char * argv[])
             // Hu moments
             cout<<endl;
             vector<vector<double>> huMoments(nBlobs);
-            for(int j=1;j<=NUM_HU;j++)
+            for(int j=1;j<=NUM_HU_INVARIANTS;j++)
             {
                 huMoments[i].push_back(Hui(*blobLists[i],j));
             }
-
+            
+            // Add area
+            huMoments[i].push_back(blobLists[i]->size());
+                                   
+            // Add perimeter
+            huMoments[i].push_back(blobArcLength[i]);
+                                   
             cout<<"Hu Invarients, area and perimeter for blob["<<i<<"]:";
             logfile<<i;
             char sbuf[256];
             char lsbuf[256];
-            for(int j=0;j<NUM_HU;j++)
+            for(int j=0;j<NUM_HU_INVARIANTS+2;j++)
             {
                 sprintf(sbuf," %0.6f",huMoments[i][j]);
                 string s(sbuf);
@@ -227,27 +234,42 @@ int main(int argc, const char * argv[])
                 string ls(lsbuf);
                 logfile<<ls;
             }
-            sprintf(sbuf," %ld %0.0lf\n",blobLists[i]->size(),blobArcLength[i]);
-            string s(sbuf);
-            cout<<s;
-            sprintf(lsbuf,"\t%12ld\t%12.0lf\n",blobLists[i]->size(),blobArcLength[i]);
-            string ls(lsbuf);
-            logfile<<ls;
+            cout<<endl;
+            logfile<<endl;
             
-            // Classify blobs based on Hu invariants
-            classifyObject(references, i, huMoments[i]);
+            // Classify blobs based on Hu invariants and compactness, then count detected objects
+            classifyObject(references, i, huMoments[i], inventory);
         }
         else
         {
             cout<<"Blob "<<i<<" has a null pointer"<<endl;
         }
-        
-        
     } // End of blobs
 
-
+    cout<<"Inventory"<<endl;
+    for(int i=0;i<NUM_DESCRIPTORS+1;i++)
+    {
+        switch (i) {
+            case FORK:
+                cout<<"Forks: "<<inventory[FORK]<<endl;
+                break;
+            case SPOON:
+                cout<<"Spoons: "<<inventory[SPOON]<<endl;
+                break;
+            case KNIFE:
+                cout<<"Knives: "<<inventory[KNIFE]<<endl;
+                break;
+            case BLOB:
+                cout<<"Blobs: "<<inventory[BLOB]<<endl;
+                break;
+            default:
+                cout<<"Classification greater than number of descriptors";
+                break;
+        }
+    }
     destroyRegionBlobLists(regionLists, blobLists);
     logfile.close();
     
+    waitKey();
     return 0;
 }

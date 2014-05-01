@@ -16,6 +16,7 @@
 #include <stdio.h>
 //C++
 #include <iostream>
+#include <fstream>
 #include <sstream>
 //Boost
 #define BOOST_FILESYSTEM_NO_DEPRECATED
@@ -147,7 +148,7 @@ int readInImage(Mat& image, string inputDataDir, string fullInputfileName, strin
         return 1;
     }
     resize(input,input,Size(input.cols * resizeFactor, input.rows * resizeFactor),0,0,INTER_LINEAR);
-    if(SHOW_WIN)
+    if(SHOW_MAIN_WIN)
     {
         string winName="Input";
         namedWindow(winName,WINDOW_NORMAL);
@@ -296,4 +297,9 @@ double calculateContours(Mat src_gray, RNG rng, int thresh, int max_thresh, int 
     return length;
 }
 
+bool is_file_exist(string fileName)
+{
+    fstream infile(fileName);
+    return infile.good();
+}
 

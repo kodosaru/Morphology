@@ -25,7 +25,7 @@ struct huRef
 };
 typedef struct huRef HUREF;
 void readInReferences(cv::vector<HUREF>& references, std::string filePath);
-int classifyObject(cv::vector<HUREF> references, int nObject, cv::vector<double> object);
+int classifyObject(cv::vector<HUREF> references, int nObject, cv::vector<double> object, cv::vector<int>& inventory);
 // Hu Translation, scale, and rotation invarient moments (+I8 recommended by Flusser & Suk)
 double Hui(cv::vector<PIXEL> v, long i);
 // Orientaton Angle

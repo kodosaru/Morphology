@@ -3,6 +3,9 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "split(std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt; const&amp;, std::__1::vector&lt;std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;, std::__1::allocator&lt;std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt; &gt; &gt;&amp;, char):main.cpp">
+      </ContextState>
+      <ContextState
          contextName = "main:kmeans.cpp">
          <PersistentStrings>
             <PersistentString
@@ -12,6 +15,9 @@
                value = "*it">
             </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "floodFill(cv::Mat&amp;, cv::Mat&amp;):main.cpp">
       </ContextState>
       <ContextState
          contextName = "stack&lt;int&gt;::print():Stack.hpp">
@@ -37,10 +43,7 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "floodFill(cv::Mat&amp;, cv::Mat&amp;):main.cpp">
-      </ContextState>
-      <ContextState
-         contextName = "split(std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt; const&amp;, std::__1::vector&lt;std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;, std::__1::allocator&lt;std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt; &gt; &gt;&amp;, char):main.cpp">
+         contextName = "readInImage(cv::Mat&amp;, std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;, std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;, std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;, std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;, float):CountObjectsMethods.cpp">
       </ContextState>
       <ContextState
          contextName = "stack&lt;int&gt;::push():Stack.hpp">
@@ -62,7 +65,10 @@
          contextName = "main:main.cpp">
          <PersistentStrings>
             <PersistentString
-               value = "argv[2]">
+               value = "cn">
+            </PersistentString>
+            <PersistentString
+               value = "huMoments">
             </PersistentString>
             <PersistentString
                value = "maxVal">
@@ -71,7 +77,7 @@
                value = "argv[1]">
             </PersistentString>
             <PersistentString
-               value = "cn">
+               value = "argv[2]">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -91,6 +97,14 @@
       </ContextState>
       <ContextState
          contextName = "extractblobs(cv::Mat&amp;, unsigned short&amp;, std::__1::vector&lt;std::__1::vector&lt;pixel, std::__1::allocator&lt;pixel&gt; &gt;*, std::__1::allocator&lt;std::__1::vector&lt;pixel, std::__1::allocator&lt;pixel&gt; &gt;*&gt; &gt;, int&amp;, std::__1::vector&lt;std::__1::vector&lt;pixel, std::__1::allocator&lt;pixel&gt; &gt;*, std::__1::allocator&lt;std::__1::vector&lt;pixel, std::__1::allocator&lt;pixel&gt; &gt;*&gt; &gt;&amp;, std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;):main.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "classifyObject(std::__1::vector&lt;huRef, std::__1::allocator&lt;huRef&gt; &gt;, int, std::__1::vector&lt;double, std::__1::allocator&lt;double&gt; &gt;):Moments.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "references[j].val.size()">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "onMouse(int, int, int, int, void*):kmeans.cpp">
@@ -118,6 +132,9 @@
                value = "temp.val">
             </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "calculateContours(cv::Mat, cv::RNG, int, int, int):CountObjectsMethods.cpp">
       </ContextState>
    </ContextStates>
 </VariablesViewState>
