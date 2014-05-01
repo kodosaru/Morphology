@@ -107,6 +107,9 @@ int main(int argc, const char * argv[])
     vector<Mat> blobImages;
     PIXEL blobPix;
     vector<double> blobArcLength;
+    int maxBlob = -1;
+    vector<vector<Point>> contours;
+    vector<Vec4i> hierarchy;
     for(int i=0;i<nBlobs;i++)
     {
         blobImages.push_back(Mat(regions.rows,regions.cols,CV_8U));
@@ -118,7 +121,7 @@ int main(int argc, const char * argv[])
             if( blobPix.val[0])
                 blobImages[i].at<uchar>(blobPix.pt)=255;
         }
-        if(SHOW_WIN && SHOW_BLOBS)
+        if(SHOW_WIN)
         {
             stringstream ss;
             ss << i;
@@ -128,36 +131,40 @@ int main(int argc, const char * argv[])
             imshow(winName,blobImages[i]);
         }
         if(WAIT_WIN)
+        {
             waitKey();
+        }
         
-        Mat src_gray;
+        /// Calculate contours  
         RNG rng(12345);
         int thresh=100;
         int max_thresh = 255;
-        
-        /// Calculate contours
-        blobArcLength.push_back(calculateContours(blobImages[i], rng, thresh, max_thresh, i));
+        blobArcLength.push_back(calculateContours(blobImages[i], hierarchy, contours, rng, thresh, max_thresh, i, maxBlob));
     }
 
     // Read in region file
     sprintf(cn,"%s%s%s%d%s",outputDataDir.c_str(),outputFileName.c_str(),"Regions",clusterCount,".png");
     Mat tempRegions=imread(cn,CV_8UC1);
+    Mat report(tempRegions.size(),CV_8UC3);
+    cvtColor(tempRegions, report, CV_GRAY2BGR);
     
     // Read in Hu invariants reference vectors, area and perimeter length and classify blobs
     vector<HUREF> references;
     readInReferences(references, inputDataDir+"references.txt");
     
     // Calculate centroids of blobs
+    Scalar labelColor;
+    Point centroid;
+    vector<PIXEL> blob;
     for(int i=0;i<nBlobs;i++)
     {
         if(blobLists[i]!=nullptr)
         {
-            Scalar labelColor;
-            Point centroid(xbar(*blobLists[i]), ybar(*blobLists[i]));
+            centroid=Point(xbar(*blobLists[i]), ybar(*blobLists[i]));
             stringstream ss;
             ss << i;
             string sVal = ss.str();
-            vector<PIXEL> blob=*blobLists[i];
+            blob=*blobLists[i];
             if (blob[0].val[0]<=128)
                 labelColor=CV_RGB(180,180,180);
             else
@@ -170,7 +177,7 @@ int main(int argc, const char * argv[])
             cout<<"Centroid of blob: ("<<centroid.x<<","<<centroid.y<<")"<<endl;
             
             // Draw major axis
-            Mat *orient = orientation(*blobLists[i]);
+            Mat *orient = orientation(*blobLists[i], i);
             double angle = orient->at<double>(0,0);
             cout<<"Orientation: "<<angle*180/M_PI<<" deg"<<endl;
             Scalar lineColor = CV_RGB(0,0,0);
@@ -199,7 +206,9 @@ int main(int argc, const char * argv[])
     // Calculate remaining statistics
     vector<int> inventory(NUM_DESCRIPTORS+1);
     for(int i=0;i<NUM_DESCRIPTORS+1;i++)
-        inventory[i]=0;;
+        inventory[i]=0;
+    string winName="Report";
+    namedWindow(winName,WINDOW_NORMAL);
     for(int i=0;i<nBlobs;i++)
     {
         if(blobLists[i]!=nullptr)
@@ -238,38 +247,73 @@ int main(int argc, const char * argv[])
             logfile<<endl;
             
             // Classify blobs based on Hu invariants and compactness, then count detected objects
-            classifyObject(references, i, huMoments[i], inventory);
+            string finalClassification = classifyObject(references, i, huMoments[i], inventory);
+            centroid=Point(xbar(*blobLists[i]), ybar(*blobLists[i]));
+            Scalar color;
+            if(finalClassification == "Fork")
+                color=Scalar(255, 0, 0);
+            else if(finalClassification == "Spoon")
+                color=Scalar(0, 255, 0);
+            else if(finalClassification  == "Knife")
+                color=Scalar( 0, 0, 255);
+            else if(finalClassification == "Blob")
+                color=Scalar(0, 128, 128);
+            else
+                cout<<"Classification greater than number of descriptors";
+            putText(report, finalClassification, Point(centroid.x,centroid.y),FONT_HERSHEY_SIMPLEX, 0.60, color,2);
+            if(SHOW_MAIN_WIN)
+            {
+                imshow(winName,report);
+            }
         }
         else
         {
             cout<<"Blob "<<i<<" has a null pointer"<<endl;
         }
     } // End of blobs
-
+    
     cout<<"Inventory"<<endl;
+    int xOffset=0.80*report.cols;
+    int yOffset=20;
+    putText(report, "Inventory", Point(xOffset,yOffset),FONT_HERSHEY_SIMPLEX, 0.60, Scalar(255,255,255),2);
+    string label;
+    Scalar color;
     for(int i=0;i<NUM_DESCRIPTORS+1;i++)
     {
         switch (i) {
             case FORK:
-                cout<<"Forks: "<<inventory[FORK]<<endl;
+                label="Forks";
+                color=Scalar(255, 0, 0);
                 break;
             case SPOON:
-                cout<<"Spoons: "<<inventory[SPOON]<<endl;
+                label="Spoons";
+                color=Scalar(0, 255, 0);
                 break;
             case KNIFE:
-                cout<<"Knives: "<<inventory[KNIFE]<<endl;
+                label="Knives";
+                color=Scalar(0, 0, 255);
                 break;
             case BLOB:
-                cout<<"Blobs: "<<inventory[BLOB]<<endl;
+                label="Blobs";
+                color=Scalar(0, 128, 128);
                 break;
             default:
                 cout<<"Classification greater than number of descriptors";
                 break;
         }
+        stringstream ss;
+        ss << inventory[i];;
+        string sVal = ss.str();
+        cout<<label+": "+sVal<<endl;
+        putText(report, label+": "+sVal, Point(xOffset+5,yOffset+(i+1)*20),FONT_HERSHEY_SIMPLEX, 0.50, color, 2);
+    }
+    if(SHOW_MAIN_WIN)
+    {
+        imshow(winName,report);
     }
     destroyRegionBlobLists(regionLists, blobLists);
     logfile.close();
-    
-    waitKey();
+    if(WAIT_MAIN_WIN)
+        waitKey();
     return 0;
 }

@@ -237,9 +237,9 @@ int kMeansCustom(bool bSaveState, std::string dataDir, std::string fileName, int
     char cn[256];
     sprintf(cn,"%s%s%s%d%s",dataDir.c_str(),fileName.c_str(),"Clusters",clusterCount,".png");
     imwrite(cn,pMouseInfo->graph);
-    if(SHOW_WIN)
+    string winName="Clusters";
+    if(bSaveState || SHOW_WIN)
     {
-        string winName="Clusters";
         namedWindow(winName,WINDOW_NORMAL);
         imshow(winName,pMouseInfo->graph);
     }
@@ -261,6 +261,11 @@ int kMeansCustom(bool bSaveState, std::string dataDir, std::string fileName, int
         }
 
         saveBackgroundClasses(pMouseInfo->backgroundClasses, dataDir+"backgroundClasses."+ss.str()+".bin");
+    }
+    
+    if(bSaveState && ! SHOW_WIN)
+    {
+        destroyWindow(winName);
     }
     
     // Reload graph (clusters image) to erase red circles and remove completed background classes
@@ -566,7 +571,7 @@ void createGraph3D(Mat& graph, Mat& labels, int clusterCount, string dataDir, bo
     for(int i=0;i<clusterCount;i++)
     {
         color = colorTab.at(i);
-        printf("ColorTab before assign (%d): (%0.2lf,%0.2lf,%0.2lf,%0.2lf)\n",i,colorTab.at(i)[0],colorTab.at(i)[1],colorTab.at(i)[2],colorTab.at(i)[3]);
+        //printf("ColorTab before assign (%d): (%0.2lf,%0.2lf,%0.2lf,%0.2lf)\n",i,colorTab.at(i)[0],colorTab.at(i)[1],colorTab.at(i)[2],colorTab.at(i)[3]);
     }
     int i = 0;
     while (i < labels.rows)

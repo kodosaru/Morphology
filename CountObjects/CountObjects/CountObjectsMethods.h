@@ -18,7 +18,8 @@ void destroyRegionBlobLists(cv::vector<cv::vector<PIXEL>*>& regionLists, cv::vec
 void extractblobs(cv::Mat& regions, int clusterCount, unsigned short& nRegion, cv::vector<cv::vector<PIXEL>*>& regionLists, unsigned short& nBlobs, cv::vector<cv::vector<PIXEL>*>& blobLists,  std::string outputDataDir, std::string outputFileName);
 int readInImage(cv::Mat& image, std::string inputDataDir, std::string fullInputfileName, std::string outputDataDir, std::string outputFileName, float resizeFactor);
 unsigned long listFiles(std::string targetPath, cv::vector<std::string>& fileNames);
-double calculateContours(cv::Mat src_gray, cv::RNG rng, int thresh, int max_thresh, int nBlob);
+double calculateContours(cv::Mat& src_gray, cv::vector<cv::Vec4i>& hierarchy, cv::vector<cv::vector<cv::Point>>& contours, cv::RNG rng, int thresh, int max_thresh, int nBlob, int& maxBlob);
+void calculateContoursPost(cv::Mat& src_gray, cv::vector<cv::Vec4i>& hierarchy, cv::vector<cv::vector<cv::Point>>& contours, cv::RNG rng, int thresh, int max_thresh, int nBlob, int& maxBlob);
 bool is_file_exist(cv::string fileName);
 
 #endif /* defined(__CountObjects__CountObjectsMethods__) */

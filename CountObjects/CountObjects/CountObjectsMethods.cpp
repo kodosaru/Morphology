@@ -240,11 +240,9 @@ unsigned long listFiles(string targetPath, vector<string>& fileNames)
     return file_count;
 }
 
-double calculateContours(Mat src_gray, RNG rng, int thresh, int max_thresh, int nBlob)
+double calculateContours(Mat& src_gray, vector<Vec4i>& hierarchy, vector<vector<Point>>& contours, RNG rng, int thresh, int max_thresh, int nBlob, int& maxBlob)
 {
     Mat canny_output;
-    vector<vector<Point> > contours;
-    vector<Vec4i> hierarchy;
     
     // Blur image
     blur(src_gray, src_gray, Size(3,3) );
@@ -256,9 +254,9 @@ double calculateContours(Mat src_gray, RNG rng, int thresh, int max_thresh, int 
     
     /// Find max contour
     double area=0;
-    int maxBlob = -1;
+    maxBlob = -1;
     double maxArea = -DBL_MAX;
-    int size = contours.size();
+    long size = contours.size();
     for( int i = 0; i<size; i++ )
     {
         area = contourArea(contours[i],false);
@@ -282,7 +280,7 @@ double calculateContours(Mat src_gray, RNG rng, int thresh, int max_thresh, int 
     drawContours( drawing, contours, maxBlob, color, 2, 8, hierarchy, 0, Point() );
     
     /// Show in a win
-    if(SHOW_WIN && SHOW_CONTOURS)
+    if(SHOW_WIN)
     {
         stringstream ss;
         ss << nBlob;
@@ -296,6 +294,48 @@ double calculateContours(Mat src_gray, RNG rng, int thresh, int max_thresh, int 
     }
     return length;
 }
+
+void calculateContoursPost(Mat& src_gray, vector<Vec4i>& hierarchy, vector<vector<Point>>& contours, RNG rng, int thresh, int max_thresh, int nBlob, int& maxBlob)
+{
+    Mat canny_output;
+    
+    // Blur image
+    blur(src_gray, src_gray, Size(3,3) );
+    
+    /// Detect edges using canny
+    Canny( src_gray, canny_output, thresh, thresh*2, 3 );
+    /// Find contours
+    findContours( canny_output, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0) );
+    
+    /// Find max contour
+    double area=0;
+    maxBlob = -1;
+    double maxArea = -DBL_MAX;
+    long size = contours.size();
+    for( int i = 0; i<size; i++ )
+    {
+        area = contourArea(contours[i],false);
+        if(area>maxArea)
+        {
+            maxBlob=i;
+            maxArea=area;
+        }
+    }
+    
+    /// Draw contours
+    Scalar color = Scalar( rng.uniform(0, 255), rng.uniform(0,255), rng.uniform(0,255) );
+    drawContours(src_gray, contours, maxBlob, color, 2, 8, hierarchy, 0, Point() );
+}
+
+void drawObjectContours(Mat& dst, vector<vector<Point>>& contours, RNG rng, int nBlob, int maxBlob)
+{
+    vector<Vec4i> hierarchy;
+    
+    /// Draw contours
+    Scalar color = Scalar( rng.uniform(0, 255), rng.uniform(0,255), rng.uniform(0,255));
+    drawContours(dst, contours, maxBlob, color, 2, 8, hierarchy, 0, Point());
+}
+
 
 bool is_file_exist(string fileName)
 {

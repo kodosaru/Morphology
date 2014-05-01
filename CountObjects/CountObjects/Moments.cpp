@@ -121,7 +121,7 @@ void readInReferences(vector<HUREF>& references, string filePath)
 	}
 }
 
-int classifyObject(vector<HUREF> references, int nObject, vector<double> object, vector<int>& inventory)
+string classifyObject(vector<HUREF> references, int nObject, vector<double> object, vector<int>& inventory)
 {
     // Actually using square of distance to avoid taking square root
     
@@ -129,7 +129,7 @@ int classifyObject(vector<HUREF> references, int nObject, vector<double> object,
     if(references[0].val.size() != object.size())
     {
         cout<<"Unable to compute Euclidean distance in classifyObject() - reference and object vectors are of a different length"<<endl;;
-        return -INT_MAX;
+        return "FAIL";
     }
     
     double minDist=DBL_MAX, tempDist;
@@ -137,7 +137,7 @@ int classifyObject(vector<HUREF> references, int nObject, vector<double> object,
     if(references[0].val.size() != (NUM_HU_INVARIANTS + 2))
     {
         cout<<"The number of statistics being compared is greater than the references provided"<<endl;
-        return referenceNdx;
+        return "FAIL";
     }
     // Loop through all of the reference Hu variant vectors
     for(int j=0;j<NUM_DESCRIPTORS;j++)
@@ -193,11 +193,11 @@ int classifyObject(vector<HUREF> references, int nObject, vector<double> object,
     }
     cout<<"Object's["<<nObject<<"] descriptor is Hu invariant distance "<<setprecision(2)<<minDist<<" away from and closest to "<<finalClassification<<"'s descriptor"<<endl;
 
-    return referenceNdx;
+    return finalClassification;
 }
 
 // Orientaton Angle
-Mat* orientation(vector<PIXEL> v)
+Mat* orientation(vector<PIXEL> v, int nBlob)
 {
     Mat *m=new Mat(2,1,CV_64FC1);
     double mup20 = muPrimeij(v, 2, 0);
@@ -210,8 +210,12 @@ Mat* orientation(vector<PIXEL> v)
         return m;
     }
     // range -90 to 90 deg
-    m->at<double>(0,0) = 0.5 * atan( (2.0 * muPrimeij(v, 1, 1)) / (mup20 - mup02) );
-    m->at<double>(1,0) = 180.0/M_PI * m->at<double>(0,0);
+    double rad = 0.5 * atan( (2.0 * muPrimeij(v, 1, 1)) / (mup20 - mup02) );
+    //if(rad > 0)
+        //rad+=M_PI/2;
+    double deg = 180.0/M_PI * m->at<double>(0,0);
+    m->at<double>(0,0) = rad;
+    m->at<double>(1,0) = deg;
     return m;
 }
 

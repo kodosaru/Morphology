@@ -341,7 +341,7 @@ void createGraph3D(Mat& graph, Mat& labels, int clusterCount, string dataDir, bo
     for(int i=0;i<clusterCount;i++)
     {
         color = colorTab.at(i);
-        printf("ColorTab before assign (%d): (%0.2lf,%0.2lf,%0.2lf,%0.2lf)\n",i,colorTab.at(i)[0],colorTab.at(i)[1],colorTab.at(i)[2],colorTab.at(i)[3]);
+        //printf("ColorTab before assign (%d): (%0.2lf,%0.2lf,%0.2lf,%0.2lf)\n",i,colorTab.at(i)[0],colorTab.at(i)[1],colorTab.at(i)[2],colorTab.at(i)[3]);
     }
     int i = 0;
     while (i < labels.rows)

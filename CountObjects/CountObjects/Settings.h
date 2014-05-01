@@ -12,11 +12,10 @@
 #define FILLED -1
 #define NUM_HU_INVARIANTS 8
 #define NUM_DESCRIPTORS 3
-#define WAIT_WIN 0
-#define SHOW_WIN 0
+#define WAIT_WIN 1
+#define SHOW_WIN 1
+#define WAIT_MAIN_WIN 1
 #define SHOW_MAIN_WIN 1
-#define SHOW_BLOBS 0
-#define SHOW_CONTOURS 0
 #define IMAGE_SCALE 0.25
 #define FULL_STAT 0
 #define MIN_REGION 1000

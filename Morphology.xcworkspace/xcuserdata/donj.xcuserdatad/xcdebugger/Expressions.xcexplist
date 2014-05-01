@@ -85,6 +85,14 @@
          contextName = "readInReferences(std::__1::vector&lt;huRef, std::__1::allocator&lt;huRef&gt; &gt;, std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;):main.cpp">
       </ContextState>
       <ContextState
+         contextName = "orientation(std::__1::vector&lt;pixel, std::__1::allocator&lt;pixel&gt; &gt;, int):Moments.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "nBlob">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "setPixel1C(pixel, cv::Mat):FloodFillMethods.h">
          <PersistentStrings>
             <PersistentString
@@ -135,6 +143,9 @@
       </ContextState>
       <ContextState
          contextName = "calculateContours(cv::Mat, cv::RNG, int, int, int):CountObjectsMethods.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "classifyUsingSavedCenters(bool, std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;, std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;, int, int&amp;):KMeansMethods.cpp">
       </ContextState>
    </ContextStates>
 </VariablesViewState>
