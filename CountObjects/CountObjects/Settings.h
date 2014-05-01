@@ -12,8 +12,8 @@
 #define FILLED -1
 #define NUM_HU_INVARIANTS 8
 #define NUM_DESCRIPTORS 3
-#define WAIT_WIN 1
-#define SHOW_WIN 1
+#define WAIT_WIN 0
+#define SHOW_WIN 0
 #define WAIT_MAIN_WIN 1
 #define SHOW_MAIN_WIN 1
 #define IMAGE_SCALE 0.25

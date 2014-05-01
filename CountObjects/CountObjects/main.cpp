@@ -1,4 +1,4 @@
-//
+ //
 //  main.cpp
 //  CountObjects
 //
@@ -256,7 +256,7 @@ int main(int argc, const char * argv[])
                 color=Scalar(0, 255, 0);
             else if(finalClassification  == "Knife")
                 color=Scalar( 0, 0, 255);
-            else if(finalClassification == "Blob")
+            else if(finalClassification == "Unknown")
                 color=Scalar(0, 128, 128);
             else
                 cout<<"Classification greater than number of descriptors";
@@ -294,7 +294,7 @@ int main(int argc, const char * argv[])
                 color=Scalar(0, 0, 255);
                 break;
             case BLOB:
-                label="Blobs";
+                label="Unknowns";
                 color=Scalar(0, 128, 128);
                 break;
             default:
@@ -307,6 +307,9 @@ int main(int argc, const char * argv[])
         cout<<label+": "+sVal<<endl;
         putText(report, label+": "+sVal, Point(xOffset+5,yOffset+(i+1)*20),FONT_HERSHEY_SIMPLEX, 0.50, color, 2);
     }
+    sprintf(cn,"%s%s%s%d%s",outputDataDir.c_str(),outputFileName.c_str(),"Report",clusterCount,".png");
+    imwrite(cn,report);
+
     if(SHOW_MAIN_WIN)
     {
         imshow(winName,report);

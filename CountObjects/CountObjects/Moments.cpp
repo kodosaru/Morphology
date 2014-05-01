@@ -184,10 +184,10 @@ string classifyObject(vector<HUREF> references, int nObject, vector<double> obje
             finalClassification=references[referenceNdx].objectDesc;
         }
     }
-    // Blob is the catch-all classification
+    // Unknown is the catch-all classification
     else
     {
-        finalClassification="Blob";
+        finalClassification="Unknown";
         referenceNdx=BLOB;
         inventory[BLOB]++;
     }
