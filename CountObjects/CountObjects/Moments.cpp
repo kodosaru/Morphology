@@ -133,7 +133,7 @@ string classifyObject(vector<HUREF> references, int nObject, vector<double> obje
     }
     
     double minDist=DBL_MAX, tempDist;
-    int referenceNdx = -INT_MAX;
+    int referenceNdx = -1;
     if(references[0].val.size() != (NUM_HU_INVARIANTS + 2))
     {
         cout<<"The number of statistics being compared is greater than the references provided"<<endl;
@@ -149,22 +149,33 @@ string classifyObject(vector<HUREF> references, int nObject, vector<double> obje
             //printf("object[%d]: %0.2f references[%d].val[%d]: %0.2f\n",k,object[k],j,k,references[j].val[k]);
             tempDist += POW2(object[k] - references[j].val[k]);
         }
-        if(tempDist < CLASSIFIER_TOLERANCE && tempDist < minDist)
+        if(tempDist < minDist)
         {
             referenceNdx = j;
             minDist = tempDist;
         }
     }
+    double area = object[8];
+    cout<<"Object's["<<nObject<<"] area is "<<setprecision(4)<<area<<fixed<<endl;
+    double length = object[9];
+    cout<<"Object's["<<nObject<<"] perimeter length is "<<setprecision(4)<<length<<fixed<<endl;
     double compactness = object[8]/object[9];
-    cout<<"Object's["<<nObject<<"] compactness is "<<compactness<<endl;
-    
+    cout<<"Object's["<<nObject<<"] compactness is "<<setprecision(4)<<compactness<<fixed<<endl;
+    double hu34Sum = object[2]+object[3];
+    cout<<"Object's["<<nObject<<"] sum of Hu 3+4 is "<<setprecision(4)<<hu34Sum<<fixed<<endl;
+
+    if(minDist > CLASSIFIER_TOLERANCE)
+    {
+           referenceNdx = -1;
+    }
+
     string finalClassification;
-    if(referenceNdx != -INT_MAX)
+    if(referenceNdx != -1)
     {
         // If preliminary classification based on Hu invariants is fork or knife, use compactness to make final decision
         if(referenceNdx == FORK || referenceNdx == KNIFE)
         {
-            if(compactness > COMPACTNESS_BOUNDARY)
+            if(area > KNIFE_AREA_BOUNDARY)
             {
                 finalClassification="Knife";
                 referenceNdx=KNIFE;
@@ -172,9 +183,18 @@ string classifyObject(vector<HUREF> references, int nObject, vector<double> obje
             }
             else
             {
-                finalClassification="Fork";
-                referenceNdx=FORK;
-                inventory[FORK]++;
+                if(hu34Sum > FORK_HU34_SUM_BOUNDARY)
+                {
+                    finalClassification="Fork";
+                    referenceNdx=FORK;
+                    inventory[FORK]++;
+                }
+                else
+                {
+                    finalClassification="Unknown";
+                    referenceNdx=UNKNOWN;
+                    inventory[UNKNOWN]++;
+                }
             }
         }
         // Object is a spoon

@@ -13,6 +13,8 @@
     #define DEBUG 1
 #endif
 
+// This is a bug-fixed, expanded version of this: http://www.techfinite.net/2013/10/program-for-stack-data-structure-in-cpp.html#sthash.L4uDyzW4.dpuf
+
 template <class T>
 class Stack {
     public : T *stack;
@@ -85,6 +87,8 @@ class Stack {
         }
         else
         {
+            // Original version of code had top++ instead of ++top which shifted and lost one element
+            // Increment must happen before assignment because "top" value starts at -1
             stack[++top]=inVal;
         }
     }
@@ -177,7 +181,5 @@ class Stack {
         std::cout<<std::endl<<"End of demo"<<std::endl;
     }
 };
-
-// See more at: http://www.techfinite.net/2013/10/program-for-stack-data-structure-in-cpp.html#sthash.L4uDyzW4.dpuf
 
 #endif /* defined(__CountObjects__Stack__) */
