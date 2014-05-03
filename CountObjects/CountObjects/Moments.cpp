@@ -188,8 +188,8 @@ string classifyObject(vector<HUREF> references, int nObject, vector<double> obje
     else
     {
         finalClassification="Unknown";
-        referenceNdx=BLOB;
-        inventory[BLOB]++;
+        referenceNdx=UNKNOWN;
+        inventory[UNKNOWN]++;
     }
     cout<<"Object's["<<nObject<<"] descriptor is Hu invariant distance "<<setprecision(2)<<minDist<<" away from and closest to "<<finalClassification<<"'s descriptor"<<endl;
 

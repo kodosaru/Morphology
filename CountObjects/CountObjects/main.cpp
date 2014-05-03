@@ -14,7 +14,6 @@
 #include "Moments.h"
 #include "Settings.h"
 #include <sstream>
-#include "Harris.h"
 #include "main.h"
 
 using namespace cv;
@@ -293,7 +292,7 @@ int main(int argc, const char * argv[])
                 label="Knives";
                 color=Scalar(0, 0, 255);
                 break;
-            case BLOB:
+            case UNKNOWN:
                 label="Unknowns";
                 color=Scalar(0, 128, 128);
                 break;

@@ -25,6 +25,6 @@
 #define FORK 0
 #define SPOON 1
 #define KNIFE 2
-#define BLOB 3
+#define UNKNOWN 3
 
 #endif

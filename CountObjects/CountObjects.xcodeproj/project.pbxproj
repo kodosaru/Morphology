@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		723CDFD5191081CA00DE2A8A /* Harris.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 723CDFD3191081CA00DE2A8A /* Harris.cpp */; };
 		72951E9D190C5DE600618A74 /* CountObjectsMethods.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 72951E96190C5DE600618A74 /* CountObjectsMethods.cpp */; };
 		72951E9E190C5DE600618A74 /* FloodFillMethods.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 72951E98190C5DE600618A74 /* FloodFillMethods.cpp */; };
 		72951E9F190C5DE600618A74 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 72951E9A190C5DE600618A74 /* main.cpp */; };
@@ -41,7 +40,6 @@
 		72951F5D190C819500618A74 /* libboost_unit_test_framework.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 72951F42190C819400618A74 /* libboost_unit_test_framework.dylib */; };
 		72951F5E190C819500618A74 /* libboost_wave.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 72951F43190C819400618A74 /* libboost_wave.dylib */; };
 		72951F5F190C819500618A74 /* libboost_wserialization.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 72951F44190C819400618A74 /* libboost_wserialization.dylib */; };
-		72CA39A018F437A9001401AB /* Canny.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 72CA399F18F437A9001401AB /* Canny.cpp */; };
 		72CA39A218F437A9001401AB /* CountObjects.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 72CA39A118F437A9001401AB /* CountObjects.1 */; };
 		72CA39E518F457A1001401AB /* libopencv_calib3d.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 72CA39AC18F457A1001401AB /* libopencv_calib3d.dylib */; };
 		72CA39E818F457A1001401AB /* libopencv_contrib.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 72CA39AF18F457A1001401AB /* libopencv_contrib.dylib */; };
@@ -61,7 +59,6 @@
 		72CA3A1218F457A1001401AB /* libopencv_superres.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 72CA39D918F457A1001401AB /* libopencv_superres.dylib */; };
 		72CA3A1618F457A1001401AB /* libopencv_video.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 72CA39DD18F457A1001401AB /* libopencv_video.dylib */; };
 		72CA3A1918F457A1001401AB /* libopencv_videostab.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 72CA39E018F457A1001401AB /* libopencv_videostab.dylib */; };
-		72CA3A1D18F45859001401AB /* CannyMethods.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 72CA3A1B18F45859001401AB /* CannyMethods.cpp */; };
 		72F3FBF9190DE2AD00586A2C /* Moments.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 72F3FBF7190DE2AD00586A2C /* Moments.cpp */; };
 /* End PBXBuildFile section */
 
@@ -81,8 +78,6 @@
 /* Begin PBXFileReference section */
 		7205A4A419112A7300AE55D9 /* main.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
 		723CDFD2191068ED00DE2A8A /* Settings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Settings.h; sourceTree = "<group>"; };
-		723CDFD3191081CA00DE2A8A /* Harris.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Harris.cpp; sourceTree = "<group>"; };
-		723CDFD4191081CA00DE2A8A /* Harris.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Harris.h; sourceTree = "<group>"; };
 		72951E96190C5DE600618A74 /* CountObjectsMethods.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CountObjectsMethods.cpp; sourceTree = "<group>"; };
 		72951E97190C5DE600618A74 /* CountObjectsMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountObjectsMethods.h; sourceTree = "<group>"; };
 		72951E98190C5DE600618A74 /* FloodFillMethods.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FloodFillMethods.cpp; sourceTree = "<group>"; };
@@ -122,7 +117,6 @@
 		72951F43190C819400618A74 /* libboost_wave.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libboost_wave.dylib; path = /usr/local/packages/boost_1_53_0/lib/libboost_wave.dylib; sourceTree = "<absolute>"; };
 		72951F44190C819400618A74 /* libboost_wserialization.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libboost_wserialization.dylib; path = /usr/local/packages/boost_1_53_0/lib/libboost_wserialization.dylib; sourceTree = "<absolute>"; };
 		72CA399C18F437A9001401AB /* CountObjects */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CountObjects; sourceTree = BUILT_PRODUCTS_DIR; };
-		72CA399F18F437A9001401AB /* Canny.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Canny.cpp; sourceTree = "<group>"; };
 		72CA39A118F437A9001401AB /* CountObjects.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = CountObjects.1; sourceTree = "<group>"; };
 		72CA39AC18F457A1001401AB /* libopencv_calib3d.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_calib3d.dylib; path = /usr/local/Cellar/opencv/2.4.7.1/lib/libopencv_calib3d.dylib; sourceTree = "<absolute>"; };
 		72CA39AF18F457A1001401AB /* libopencv_contrib.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_contrib.dylib; path = /usr/local/Cellar/opencv/2.4.7.1/lib/libopencv_contrib.dylib; sourceTree = "<absolute>"; };
@@ -142,8 +136,6 @@
 		72CA39D918F457A1001401AB /* libopencv_superres.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_superres.dylib; path = /usr/local/Cellar/opencv/2.4.7.1/lib/libopencv_superres.dylib; sourceTree = "<absolute>"; };
 		72CA39DD18F457A1001401AB /* libopencv_video.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_video.dylib; path = /usr/local/Cellar/opencv/2.4.7.1/lib/libopencv_video.dylib; sourceTree = "<absolute>"; };
 		72CA39E018F457A1001401AB /* libopencv_videostab.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_videostab.dylib; path = /usr/local/Cellar/opencv/2.4.7.1/lib/libopencv_videostab.dylib; sourceTree = "<absolute>"; };
-		72CA3A1B18F45859001401AB /* CannyMethods.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CannyMethods.cpp; sourceTree = "<group>"; };
-		72CA3A1C18F45859001401AB /* CannyMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CannyMethods.h; sourceTree = "<group>"; };
 		72F3FBF7190DE2AD00586A2C /* Moments.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Moments.cpp; sourceTree = "<group>"; };
 		72F3FBF8190DE2AD00586A2C /* Moments.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Moments.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -274,12 +266,7 @@
 				723CDFD2191068ED00DE2A8A /* Settings.h */,
 				72951E9B190C5DE600618A74 /* Stack.cpp */,
 				72951E9C190C5DE600618A74 /* Stack.hpp */,
-				72CA399F18F437A9001401AB /* Canny.cpp */,
 				72CA39A118F437A9001401AB /* CountObjects.1 */,
-				72CA3A1B18F45859001401AB /* CannyMethods.cpp */,
-				72CA3A1C18F45859001401AB /* CannyMethods.h */,
-				723CDFD3191081CA00DE2A8A /* Harris.cpp */,
-				723CDFD4191081CA00DE2A8A /* Harris.h */,
 			);
 			path = CountObjects;
 			sourceTree = "<group>";
@@ -360,16 +347,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				723CDFD5191081CA00DE2A8A /* Harris.cpp in Sources */,
 				72951E9E190C5DE600618A74 /* FloodFillMethods.cpp in Sources */,
 				72951F28190C6CC400618A74 /* Archive.cpp in Sources */,
 				72951E9D190C5DE600618A74 /* CountObjectsMethods.cpp in Sources */,
 				72951EA0190C5DE600618A74 /* Stack.cpp in Sources */,
 				72F3FBF9190DE2AD00586A2C /* Moments.cpp in Sources */,
-				72CA3A1D18F45859001401AB /* CannyMethods.cpp in Sources */,
 				72951F29190C6CC400618A74 /* KMeansMethods.cpp in Sources */,
 				72951E9F190C5DE600618A74 /* main.cpp in Sources */,
-				72CA39A018F437A9001401AB /* Canny.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
