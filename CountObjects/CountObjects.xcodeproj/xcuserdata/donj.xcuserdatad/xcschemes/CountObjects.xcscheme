@@ -64,7 +64,7 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "DSC02138.png"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "DSC02139.png"
@@ -99,6 +99,10 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
+            argument = "DSC02158.png"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
             argument = "DSC02162.png"
             isEnabled = "NO">
          </CommandLineArgument>
@@ -107,48 +111,44 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "DSC02169.JPG"
+            argument = "DSC02169.png"
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "DSC02170.JPG"
+            argument = "DSC02170.png"
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "DSC02171.JPG"
+            argument = "DSC02171.png"
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "DSC02172.JPG"
+            argument = "DSC02172.png"
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "DSC02173.JPG"
+            argument = "DSC02173.png"
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "DSC02174.JPG"
+            argument = "DSC02174.png"
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "DSC02175.JPG"
+            argument = "DSC02175.png"
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "DSC02176.JPG"
+            argument = "DSC02176.png"
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "DSC02177.JPG"
+            argument = "DSC02177.png"
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "DSC02178.JPG"
-            isEnabled = "NO">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "DSC02180.JPG"
-            isEnabled = "NO">
+            argument = "DSC02178.png"
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "outputYCrCb"

@@ -195,7 +195,7 @@ int main(int argc, const char * argv[])
     }
     sprintf(cn,"%s%s%s%d%s",outputDataDir.c_str(),outputFileName.c_str(),"Blobs",clusterCount,".png");
     imwrite(cn,tempRegions);
-    if(SHOW_MAIN_WIN)
+    if(SHOW_WIN)
     {
         string winName="Moments, Centroid and Major Axis";
         namedWindow(winName,WINDOW_NORMAL);
